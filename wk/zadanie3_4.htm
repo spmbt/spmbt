@@ -1,0 +1,200 @@
+﻿<!DCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> 
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<head><title>задания 3, 4 (вёрстка, JS), 5.05.2009</title> 
+<style>
+	.letters{
+		width:100%;
+		height:24px;
+		background:#E9EDF0;
+		font-size:14px;
+		text-align:left;
+		font-weight:bold;
+		border-bottom-width:1px;
+		border-bottom-style:solid;
+		border-bottom-color:#c2c2c2;
+	}
+	.letters div{padding:6px;}
+	.words{
+		font-size:14px;
+		text-align:left;
+	}
+	.words div{padding-left:6px;}
+</style>
+</head>
+<body style="background-color:#eee;">
+
+
+<div style="color:gray;"> 3. Сверстайте текст, <a href="task3-4.png">как показано на рисунке</a>. Каждая колонка должна масштабироваться пропорционально при 
+изменении размеров окна браузера. Решение должно быть кроссбраузерным. </div> 
+<br />
+<br />
+<div style="height=600px;min-height:600px;background:white;border:1px dotted gray;">
+	<table style="border:1px solid;width:100%;"><tr><td style="width:71%;font-size:2px;">1</td><td style="width:29%;background:darkblue;font-size:2px;"></td></tr></table>
+	<div style="overflow:hidden;width:29%;float:right;">
+		<div style="font-size:10px;">
+			Сдирание 40%-50% налогов (не считая налоги на работодателя), их перераспределение в пользу малообеспеченных позволило доминирующей социал-демократической партии уютно находиться у власти этого «демократического» королевства в течении 95% от последних 90 лет. КПСС отдыхает ;).
+		</div>
+	</div>
+	<div style="overflow:hidden;width:71%;width=100%;">
+		<div style="font-size:15px;">
+			1) Совет для экономистов №1. На пароме все дорого. Не только на пароме, но везде в Швеции все вообще дорого, а особенно выпивка. Если экономия средств для вас актуальна, то выпивку и сигареты везите с собой...
+		</div>
+		<div style="font-size:30px;color:#ccc;">
+			«Цена за завтрак «шведский стол» 100 крон (10 евро) на пароме мне показалась разумной с учетом качества оного стола и лимитами по времени в путешествии.
+		</div>
+		<div style="font-size:12px;">	2) Забота государства о своих гражданах поражает воображение россиянина!»<br />
+			3) Сдирание 40%-50% налогов (не считая налоги на работодателя), их перераспределение  в пользу малообеспеченных позволило доминирующей социал-демократической партии уютно находиться у власти этого «демократического» королевства в течении 95% от последних 90 лет. КПСС отдыхает ;).
+		</div>
+	</div>
+	<table style="border:1px solid;width:100%;"><tr><td style="width:71%;font-size:2px;">1</td><td style="width:29%;background:darkblue;font-size:2px;"></td></tr></table>
+</div>
+<br />
+<br />
+<br />
+<div style="color:gray;">4. Реализуйте список с функционалом, показанным на рисунке. Постарайтесь минимизировать количество кода 
+и используемых фреймворков (постарайтесь уложиться в 20кб Java Script кода).  <br />
+<i>В данном задании представлен список, а не аккордеон. Плашки с буквами являются оглавлением части списка.</i>
+</div>
+<script>
+	g=function(X){return document.getElementById(X);}
+	d=document;
+	IeOp=d.all;
+	IE=navigator.appVersion.search('MSIE')>=0 &&! self.opera;
+	FF=!IeOp;
+	aLetterTop=[]; //сдвиги top элементов 'letters'
+	var aaaHeight=0;
+	fs=function(e){
+		var aaSTop=g('aa').scrollTop;
+		for(var j=1;j<aLetterTop.length;j++){
+			if(aLetterTop[j] > aaSTop){
+				g('aaa').innerHTML=g('aa').childNodes[aLetterI[j-1]].innerHTML;
+				break;
+			}
+		}
+		g('aaa').style.top=(FF?0:g('aa').scrollTop)+(IE?0:g('aa').offsetTop) 
+			- (aaaHeight > aLetterTop[j] - aaSTop ? aaSTop + aaaHeight - aLetterTop[j] : 0) +'px';
+	}
+	onresize=fs;
+	onload=function(){
+		g('aaa').style.width=g('letterA').offsetWidth+'px';
+		aaaHeight=g('aaa').offsetHeight;
+		aLetterI=[];
+		var l=g('aa').childNodes.length;
+		var j=0; //счёт 'letters'
+		for(var i=0;i<l;i++){
+			var tt=g('aa').childNodes[i];
+			if(tt.className=='letters'){
+				aLetterI[j]=i;
+				aLetterTop[j++]=tt.offsetTop-(IE?0:g('aa').offsetTop);
+			}
+		}
+		aLetterTop[j]=999999; //для охвата последнего элемента в дальнейшем
+	}
+</script>
+<center style="background:white;border:1px dotted gray;">
+<div id="aa0" style="position:relative;z-index:2;background:white;border-bottom-width:1px;border-bottom-style:solid;border-bottom-color: black;width:399px;height:30px;overflow:auto;">
+</div>
+<div id="aa" style="border:1px solid black;width:399px;height:300px;overflow:auto;" onscroll="fs(event)">
+	<div id="aaa" class="letters" style="position:absolute;"><div>
+	A
+	</div></div>	
+	<div id="letterA" class="letters"><div>
+	A
+	</div></div>
+	<div class="words"><div>
+		a<br />
+		aa<br />
+		aaa<br />
+		aaaa<br />
+		aaaaa<br />
+	</div></div>
+	<div class="letters"><div>
+	Б
+	</div></div>
+	<div class="words"><div>
+		б<br />
+		бб<br />
+		ббб<br />
+		бббб<br />
+		ббббб<br />
+		бббббб<br />
+		ббббббб<br />
+		бббббббб<br />
+		ббббббббб<br />
+	</div></div>
+	<div class="letters"><div>
+	В
+	</div></div>
+	<div class="words"><div>
+		в<br />
+		вв<br />
+		ввв<br />
+		вввв<br />
+		ввввв	<br />
+		в<br />
+		вв<br />
+		ввв<br />
+		вввв<br />
+		ввввв	<br />
+	</div></div>
+	<div class="letters"><div>
+	Г	
+	</div></div>
+	<div class="words"><div>
+		г<br />
+		г<br />
+		г<br />
+		гг<br />
+		ггг<br />
+		гггг<br />
+		ггггг<br />
+		гггггг<br />
+		ггггггг<br />
+		гггггггг<br />
+		г<br />
+		гг<br />
+		ггг<br />
+		гггг<br />
+		г<br />
+		гг<br />
+		ггг<br />
+		гггг<br />
+		г<br />
+		гг<br />
+		ггг<br />
+		гггг<br />
+	</div></div>
+</div>
+<br />
+<br />
+</center>
+
+<p style=""><u>Результат</u>: (3-е) сделано обрезание мешающих пропорциональности длинных слов (по overflow:hidden;); (4-е) один из вариантов решения; объём (несжатого и с комм.) кода JS - 1 кБа.<br />
+<i>Примечания</i>: В 3-м задании вверху и внизу поставлены линейки на базе таблицы для контроля за правильностью пропорций: 71% левая колонка, 29% правая. Использованы хаки IE в CSS ("=") для кроссбраузерности. Проверено в FF2, IE6, Opera 9.24.
+</p>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

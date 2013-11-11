@@ -1,0 +1,297 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru">
+<head>
+	<title>Пример - виджет индексов доверия / ФОМ</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+
+
+	<script type="text/javascript" src="jsFom/jquery.js"></script>
+	<script type="text/javascript" src="jsFom/jquery.tmpl.js"></script>
+	<script type="text/javascript" src="jsFom/xml2json.js"></script>
+	<script type="text/javascript" src="jsFom/widgetFomIndexes.js"></script>
+	<script type="text/javascript" src="jsFom/highcharts.js"></script>
+	
+	<link rel="stylesheet" type="text/css" href="jsFom/widgetFomIndexes.css" media="all" />
+</head>
+<body>
+<div style="float: right;"><a href="widgetFomIndexes-shots/index.htm">Скриншоты из разных бр-ров</a>; <a href="widgetFomIndexes-readme.txt" target="_blank">README (как запускать)</a></div>
+<div id="target"></div>
+<script>
+	$.tmpl( "<li>${Name}</li>", { "Name" : "виджет индексов доверия" }).appendTo( "#target" );
+	
+</script>
+<!-- === шаблон виджета === -->
+<script id="fomIndexes" type="text/x-jquery-tmpl">
+	<div class="head">
+		<div class="titleItems">
+			пункты
+		</div>
+		<div class="titleIndexes">
+			индексы
+		</div>
+	</div>
+	<div class="body">
+		<div class="body2">
+			<div class="carousel"><!--список горизонтально распол-ных страниц - карусель-->
+				{{each $data.list}}
+				{{if !($index % $data.listLinesInView) }}
+				<div class="list">
+				{{/if}}
+					<div class="line{{if $index == $data.iSelect }} checked{{/if}}" rel="${link}">
+						<div class="delta{{if /\-/.test($data.list[$index].delta)}} minus{{else}} plus{{/if}}">
+						{{html $data.list[$index].delta}}
+						</div>
+						<div class="last">
+							{{html $data.list[$index].lastValue}}
+						</div>
+						<div class="txtCellMetric">
+
+							<div class="txtMetric">${titleinx}</div>
+						</div>
+						<div class="txtCell">
+							<div class="hellip">
+								&hellip;
+							</div>
+							<div class="txt">${titleinx}</div>
+						</div>
+					</div>
+				{{if !(($index +1) % $data.listLinesInView) || $index == $data.list.length - 1}}
+				</div>
+				{{/if}}
+				{{/each}}
+			</div>
+			<div class="arrange" title="на страницу &quot;${$data.list[$data.iSelect].titleinx}&quot;">
+				<button class="copyCode left" title="предыдущий список графиков">&lt;&lt;-</button>
+				<button class="copyCode right" title="следующий список графиков">->></button>
+			</div>
+			<div class="graph0" title="на страницу с описанием графика">
+				<div class="graph"><!--место для графика--></div>
+			</div>
+			<div class="dates">
+				<div class="last">
+					${$data.list[$data.iSelect].lastDate}
+				</div>
+				<div class="first">
+					${$data.list[$data.iSelect].firstDate}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="foot">
+		<table cellspacing="0" cellpadding="0" border="0"><tr><td>
+			<div class="button copyCode" title="для установки информера на свой сайт">Показать код</div>
+		</td><td>
+			<div class="button allIndexes" title="динамика всех опросов в подробностях - перейти">Все индексы</div>
+		</td></tr></table>
+	</div>
+</script>
+<!-- === /шаблон виджета === -->
+
+<!-- === шаблон настроек === -->
+<script id="panelSettings" type="text/x-jquery-tmpl">
+	<div class="head">
+		{{if $item.o.head}}{{html $item.o.head}}, н{{else}}Н{{/if}}астройки:
+	</div>
+	<form onSubmit="alert(1);return!1">
+	{{each $data}}
+	{{if $item.d[$index] && !$item.o.stringed}}
+	<div class="panelSettingsLine">
+		{{if typeof $data[$index] !='object' || typeof $data[$index] =='string'
+			&& ($data[$index].length < 60 || !/(\r|\n)/m.test($data[$index]))}}
+		<div class="input">
+			<input name="${$index}" title="${$index}"
+			{{if /(number|string)/.test(typeof $data[$index])}}
+				type="text"
+				size="${Math.ceil($data[$index].toString().length /5 ||1) *5 +2}"
+				value="${$data[$index]}"
+			{{/if}}
+			{{if typeof $data[$index] =='boolean'}}
+				type="checkbox"
+				{{if $data[$index] }}checked="checked"{{/if}}
+			{{/if}}
+			/>
+		</div>
+		{{else}} <!--if object|long string|multiline-->
+		<div class="textarea">
+		<textarea name="${$index}">{{if $data[$index] !='string'}}${$data[$index].vText}{{else}}}${$data[$index]}{{/if}}</textarea>
+		</div>
+		{{/if}}
+		<div class="definition">${$item.d[$index]}</div>
+	</div>
+	<div class="clr"></div>
+	{{/if}}
+	{{/each}}
+	</form>
+	<div><input class="s0" type="button" value="{{if $item.o.textButton}}${$item.o.textButton}{{else}}Создать{{/if}}"/></div>
+	<div class="clr"></div>
+</script>
+<!-- === /шаблон настроек === -->
+
+<div class="b-wrap">
+
+<!-- widgetFomIndexes -->
+
+<!-- features -->
+
+<div class="b-panelSettings widgetFomIndexes">
+</div>
+<div class="b-widgetFomIndexes" style="margin: 12px auto;" id="i0">
+</div>
+
+<div class="b-panelSettings widgetFomIndexes">
+</div>
+<div class="b-widgetFomIndexes" style="margin: 12px auto;" id="i1">
+</div>
+
+<div class="b-panelSettings widgetFomIndexes">
+</div>
+<div class="b-widgetFomIndexes" style="margin: 12px auto;" id="i2">
+</div>
+
+<!-- /features -->
+
+<div class="b-widgetFomIndexes" style="margin: 12px auto;" id="i3">
+	<div class="head">
+		<div class="titleItems">
+			пункты
+		</div>
+		<div class="titleIndexes">
+			(это ранний макет)
+		</div>
+	</div>
+	<div class="body">
+		<div class="body2">
+			<div class="carousel">
+				<div class="list">
+					<div class="line checked">
+						<div class="delta plus">
+							+0.3
+						</div>
+						<div class="last">
+							54.2
+						</div>
+						<div class="txt">
+							Доверие Д. Медведеву
+						</div>
+					</div>
+					<div class="line">
+						<div class="delta minus">
+							-40.2
+						</div>
+						<div class="last">
+							57.6
+						</div>
+						<div class="txt">
+							Доверие В. Путину
+						</div>
+					</div>
+					<div class="line">
+						<div class="delta minus">
+							-1.8
+						</div>
+						<div class="last">
+							88.3
+						</div>
+						<div class="txt">
+							Динамика цен
+						</div>
+					</div>
+					<div class="line">
+						<div class="delta plus">
+							+1.8
+						</div>
+						<div class="last">
+							31.4
+						</div>
+						<div class="txt">
+							Протестные настроения
+						</div>
+					</div>
+				</div>
+				<div class="list">
+					<div class="line checked">
+						<div class="delta plus">
+							+0.3
+						</div>
+						<div class="last">
+							54.2
+						</div>
+						<div class="txt">
+							Доверие Д. Медведеву
+						</div>
+					</div>
+					<div class="line">
+						<div class="delta minus">
+							-40.2
+						</div>
+						<div class="last">
+							57.6
+						</div>
+						<div class="txt">
+							Доверие В. Путину
+						</div>
+					</div>
+					<div class="line">
+						<div class="delta minus">
+							-1.8
+						</div>
+						<div class="last">
+							88.3
+						</div>
+						<div class="txt">
+							Динамика цен
+						</div>
+					</div>
+					<div class="line">
+						<div class="delta plus">
+							+1.8
+						</div>
+						<div class="last">
+							31.4
+						</div>
+						<div class="txt">
+							Протестные настроения
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="arrange">
+				<button class="copyCode left">&lt;&lt;-</button>
+				<button class="copyCode right">->></button>
+			</div>
+			<div class="graph" id="container">
+				<!--место для графика-->
+			</div>
+			<div class="dates">
+				<div class="last">
+					31.07.2011
+				</div>
+				<div class="first">
+					15.11.2009
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="foot">
+		<div class="button copyCode" title="для установки информера на свой сайт">Показать код</div>
+		<div class="button allIndexes" title="динамика всех опросов в подробностях - перейти">Все индексы</div>
+	</div>
+
+</div>
+<div id="container2"></div>
+
+<!-- /widgetFomIndexes -->
+</div>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

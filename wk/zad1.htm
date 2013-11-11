@@ -1,0 +1,229 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> 
+	<head><title>Задание 1, Горячев Д.Б., 23.04.2009</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251" />
+<link rel="stylesheet" type="text/css" href="img/zad1.css" />
+<script type="text/javascript" src="img/zad1.js"></script>
+</head>
+<body> <!-- Клики по меню работают -->
+
+<!--строго говоря, эта вёрстка тоже устарела. Если структуру страницы держать в БД, то лучше её отдавать в JSON, а здесь развёртывать-->
+<div id="top1" class="headerText">
+	<div id="top1_1">
+		<table id="top1menu" onmouseover="menuOver(event)" onmouseout="menuOver(event)" onclick="menuOver(event)">
+			<tr>
+				<td id="menu1" style="width:141px;">
+					<div>
+						<img class="top1raquo" src="img/top1raquo.png" alt="" /> <span class="top1Bold">Настройки объектов</span>
+					</div>
+					<div id="menu1Sub" class="menuSub" style="width:149px;">
+						<div id="menu1Sub1" class="menuSubSubDelimBot">
+							<div>Настройка объектов</div>
+						</div>
+						<div id="menu1Sub2" class="menuSubSubDelimTop">
+							<div>Окраски связей</div>
+						</div>
+					</div>
+				</td>
+				<td id="menu2" style="width:169px;">
+					<div>
+						<img class="top1raquo" src="img/top1raquo.png" alt="" /> <span class="top1Bold">Настройки справочников</span>
+					</div>
+					<div id="menu2Sub" class="menuSub" style="width:176px;">
+						<div id="menu2Sub1" class="menuSubSubDelimBot">
+							<div>Настройка общих каталогов</div>
+						</div>
+						<div id="menu2Sub2" class="menuSubSubDelimTop">
+							<div>Словарь стоп-слов</div>
+						</div>
+						<div id="menu2Sub3" class="menuSubSub">
+							<div>Словарь синонимов</div>
+						</div>
+						<div id="menu2Sub4" class="menuSubSub">
+							<div>Словарь опечаток</div>
+						</div>
+						<div id="menu2Sub5" class="menuSubSub">
+							<div>Управление словарями</div>
+						</div>
+					</div>
+				</td>
+				<td id="menu3" style="width:136px;">
+					<div>
+						<img class="top1raquo" src="img/top1raquo.png" alt="" /> <span class="top1Bold">Настройки системы</span>
+					</div>
+					<div id="menu3Sub" class="menuSub" style="width:145px;">
+						<div id="menu3Sub1" class="menuSubSub">
+							<div>Общие настройки</div>
+						</div>
+						<div id="menu3Sub2" class="menuSubSub">
+							<div>Исключения</div>
+						</div>
+					</div>
+				</td>
+				<td id="menu4" style="width:140px;">
+					<div>
+						<img class="top1raquo" src="img/top1raquo.png" alt="" /> <span class="top1Bold">Ввод данных</span>
+					</div>
+					<div id="menu4Sub" class="menuSub" style="width:145px;">
+						<div id="menu4Sub1" class="menuSubSub">
+							<div>Данные 1</div>
+						</div>
+						<div id="menu4Sub2" class="menuSubSub">
+							<div>Данные 2</div>
+						</div>
+						<div id="menu4Sub3" class="menuSubSub">
+							<div>Данные 3</div>
+						</div>
+						<div id="menu4Sub4" class="menuSubSub">
+							<div>Данные 4</div>
+						</div>
+						<div id="menu4Sub5" class="menuSubSubDelimBot">
+							<div>Данные 5</div>
+						</div>
+						<div id="menu4Sub6" class="menuSubSubDelimTop">
+							<div>Удаление</div>
+						</div>
+					</div>
+				</td>
+				<td id="menu5" class="top1normalText" style="width:35px;">
+					<div style="text-decoration: none;">
+						&nbsp;
+					</div>
+				</td>
+				<td id="menu6" class="top1normalText" style="width:58px;">
+					<div>
+						<img class="top1raquo" src="img/top1raquo.png" alt="" /> <span class="">Прочее</span>
+					</div>
+				</td>
+				<td id="menu7" class="top1normalText" style="width:100px;">
+					<div>
+						<img class="top1raquo" src="img/top1raquo.png" alt="" /> <span class="">Вход в систему</span>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+<!-- можно и так, как ниже, и через дивы, но если резиновый заголовок и переменные шрифты, то лучше таблица, как выше
+	<span id="top1menu1span"></span>
+	<span id="top1menu2span"><img class="top1raquo" src="img/top1raquo.png" alt="" /> Настройки справочников</span>
+	<span id="top1menu3span"><img class="top1raquo" src="img/top1raquo.png" alt="" /> Настройки системы</span>
+	<span id="top1menu4span"><img class="top1raquo" src="img/top1raquo.png" alt="" /> Ввод данных</span>
+	<span id="top1menu5span"><img class="top1raquo" src="img/top1raquo.png" alt="" /> Прочее</span>
+	<span id="top1menu6span"><img class="top1raquo" src="img/top1raquo.png" alt="" /> Вход в систему</span>-->
+</div>
+<div id="top2" class="headerText">
+	<div id="top2_1">
+		<img class="top2raquo" src="img/top2raquo.png" alt="" /><span id="top2span">Окраски связей
+		</span>
+	</div>
+</div>
+<div id="logoArion">
+	
+</div>
+
+<div id="body1">
+	<div id="top3">
+		Название:<input id="top3in1" value="Клики по меню работают" />
+		Число привязок:<input id="top3in2" />
+		<button id="top3butt1">Добавить</button>
+	</div>
+	
+	<div id="body1_1">
+		<table id="body1tb">
+			<tr class="tbTop">
+				<td style="width:68%">
+					Название
+				</td>
+				<td style="width:16%">
+					Число привязок
+				</td>
+				<td style="width:16%">
+					Системный
+				</td>
+			</tr>
+			<tr class="tbTrEven"><td>Действие</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrOdd"><td>Имеет</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrEven"><td>Действие</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrOdd"><td>Имеет</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrEven"><td>Действие</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrOdd"><td>Имеет</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrEven"><td>Действие</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrOdd"><td>Имеет</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrEven"><td>Действие</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrOdd"><td>Имеет</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrEven"><td>Действие</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrOdd"><td>Имеет</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrEven"><td>Действие</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrOdd"><td>Имеет</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrEven"><td>Действие</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrOdd"><td>Имеет</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrEven"><td>Действие</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrOdd"><td>Имеет</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrEven"><td>Действие</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrOdd"><td>Имеет</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrEven"><td>Действие</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrOdd"><td>Имеет</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrEven"><td>Действие</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrOdd"><td>Имеет</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrEven"><td>Действие</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrOdd"><td>Имеет</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrEven"><td>Действие</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrOdd"><td>Имеет</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrEven"><td>Действие</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrOdd"><td>Имеет</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrEven"><td>Действие</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrOdd"><td>Имеет</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrEven"><td>Действие</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrOdd"><td>Имеет</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrEven"><td>Действие</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrOdd"><td>Имеет</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrEven"><td>Действие</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrOdd"><td>Имеет</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrEven"><td>Действие</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrOdd"><td>Имеет</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrEven"><td>Действие</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrOdd"><td>Имеет</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrEven"><td>Действие</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrOdd"><td>Имеет</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrEven"><td>Действие</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrOdd"><td>Имеет</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrEven"><td>Действие</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrOdd"><td>Имеет</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrEven"><td>Действие</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrOdd"><td>Имеет</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrEven"><td>Действие</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrOdd"><td>Имеет</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrEven"><td>Действие</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrOdd"><td>Имеет</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrEven"><td>Действие</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrOdd"><td>Имеет</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrEven"><td>Действие</td><td>15</td><td>x</td></tr>
+			<tr class="tbTrOdd"><td>Имеет</td><td>15</td><td>x</td></tr>
+		</table>
+	</div>
+
+</div>
+<div id="bottom1" class="headerText">
+	<div id="bottom1_1">
+		<img id="bottomPicInstall" src="img/bottomPicInstall.png" alt="" />Инсталляция <span>anton2fs_zee</span>
+		<img id="bottomPicLogin" src="img/bottomPicLogin.png" alt="" /><span>Ермаков Алексей</span>
+	</div>
+</div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

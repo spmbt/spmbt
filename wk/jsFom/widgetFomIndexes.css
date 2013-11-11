@@ -1,0 +1,306 @@
+/*=== for widgetFomIndexes widget - D.Goryachev, 2011-08-10 ===*/
+.b-panelSettings.widgetFomIndexes,
+.b-widgetFomIndexes.features{
+	width: 335px;
+	margin: 2px auto;
+	padding: 2px 4px;
+	max-height: none;
+}
+	.b-panelSettings.widgetFomIndexes .head{
+		border-bottom: 1px solid #444;
+		margin: 0 2px 2px;
+		/*text-decoration: underline;*/
+	}
+	.b-panelSettings.widgetFomIndexes input[type="text"],
+	.b-widgetFomIndexes.features input[type="text"]{
+		float: left;
+		/*width: 3em;*/
+		border: 1px solid #999;
+		text-align: center;
+			-moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px;
+	}
+	.b-panelSettings.widgetFomIndexes div.input,
+	.b-panelSettings.widgetFomIndexes div.definition{
+		float: left;
+	}
+	.b-panelSettings.widgetFomIndexes div.definition{
+		padding-left: 4px;
+	}
+	.b-panelSettings.widgetFomIndexes input[type="button"],
+	.b-widgetFomIndexes.features input[type="button"]{
+		float: right;
+		border: none;
+		padding: 0 4px;
+			-moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
+		cursor: pointer;
+	}
+	.b-panelSettings.widgetFomIndexes div.textarea,
+	.b-panelSettings.widgetFomIndexes div.textarea textarea{
+		width: 100%;
+	}
+	.b-panelSettings.widgetFomIndexes div.textarea textarea{
+		width: 99%;
+		border: 1px solid #444;
+	}
+
+.clr{clear: both; height: 1px;}
+
+/*=== /panelSettings template ===*/
+
+.b-panelSettings,
+.b-widgetFomIndexes{
+	width: 235px;
+	max-height: 323px;
+	margin-bottom: 10px;
+		-moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px;
+	background: #a6a6a6;
+}
+.b-widgetFomIndexes{
+	font-size: 1px;
+}
+	.b-widgetFomIndexes .head{
+		height: 30px;
+		background: #a6a6a6;
+			-moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px;
+		font-size: 13px;
+		font-variant: small-caps;
+		color: #fff;
+	}
+		.b-widgetFomIndexes .head .titleIndexes{
+			padding: 7px 0 0 24px;
+			font-size: 120%;
+			background: url('fomLogoMini.gif') 8px 9px no-repeat; /*TODO to sprite*/
+		}
+		.b-widgetFomIndexes .head .titleItems{
+			float: right;
+			padding: 9px 10px 4px;
+		}
+	.b-widgetFomIndexes .body{
+		width: 231px;
+		height: 240px;
+		overflow: hidden;
+		border: 2px solid #404040;
+		background: #404040;
+	}
+	.b-widgetFomIndexes .body2{ /*for IE*/
+		position: absolute;
+		width: 231px;
+		overflow: hidden;
+	}
+		.b-widgetFomIndexes .carousel{
+			width: 4462px;/*more width*/
+			clear: both;
+		}
+		.b-widgetFomIndexes .body .list{
+			position: relative;
+			float: left;
+			width: 231px;
+			height: 80px;
+			font-size: 12px;
+		}
+			.b-widgetFomIndexes .body .list .line{
+				height: 18px;
+				margin-bottom: -1px;
+				padding: 1px 0 0 5px;
+				border-bottom: 2px solid #444;
+				white-space: nowrap;
+				background-color: #555;
+				color: #bbb;
+				cursor: pointer;
+			}
+			.b-widgetFomIndexes .body .list .line:hover{
+				background-color: #888;
+				color: #eee;
+			}
+			.b-widgetFomIndexes .body .list .line.checked{
+				background-color: #a6a6a6;
+				color: #fff;
+				cursor: default;
+			}
+				.b-widgetFomIndexes .body .list .line .txtCellMetric{
+					position: absolute;
+				}
+				.b-widgetFomIndexes .body .list .line .txtCell{
+					width: 160px;
+					max-height: 1.4em;
+					overflow: hidden;
+				}
+					.b-widgetFomIndexes .body .list .line .txtCell:hover :not(.hellip){
+						max-height: none;
+						overflow: visible;
+					}
+					.b-widgetFomIndexes .body .list .line .txt{
+						overflow: hidden;
+						width: auto;
+						/*width= 160px;*/
+						text-overflow: ellipsis;
+						-o-text-overflow: ellipsis;
+						-webkit-text-overflow: ellipsis;
+					}
+					.b-widgetFomIndexes .body .list .line .txtMetric{
+						position: relative;
+						visibility: hidden;
+						top: -5.3em;
+						padding: 0 2px 0 3px;
+						float: left;
+						width: auto;
+						background-color: #aa6;
+						color: #ffd;
+					}
+						.b-widgetFomIndexes .body .list .line:hover .txtMetric.hoverTitle{
+							visibility: visible;
+							max-width: 230px;
+							white-space: normal;
+							text-align: center;
+							left: 0.5em;
+							top: 1.6em;
+							z-index: 2;
+						}
+					.b-widgetFomIndexes .body .list .line .txtMetric.hoverTitle:hover{
+						display: none;
+						visibility: hidden;
+						top: -1.3em;
+					}
+				.b-widgetFomIndexes .body .list .line .invis{
+					visibility: hidden;
+				}
+				.b-widgetFomIndexes .body .list .line .last{
+					width: 29px;
+					float: right;
+					padding: 1px 4px 0;
+					background: #404040;
+						-moz-border-radius-topleft: 3px; -webkit-border-top-left-radius: 3px; border-top-left-radius: 3px;
+						-moz-border-radius-bottomLeft: 3px; -webkit-border-bottom-left-radius: 3px; border-bottom-left-radius: 3px;
+					text-align: center;
+					font-size: 11px;
+					color: #fff;
+				}
+				.b-widgetFomIndexes .body .list .line .delta{
+					width: 27px;
+					float: right;
+					padding: 1px 1px 0;
+					background-color: #404040;
+					text-align: center;
+					font-size: 11px;
+					color: #fff;
+				}
+				.b-widgetFomIndexes .body .list .line .delta.plus{ /*green*/
+					background: #383;						
+				}
+				.b-widgetFomIndexes .body .list .line .delta.minus{ /*red-orange*/
+					background: #f55b11;
+				}
+				.b-widgetFomIndexes .body .list .line .hellip{
+					position: relative;
+					z-index: 1;
+					float: right;
+					padding: 1px 1px 0;
+					background-color: #555;
+					text-align: center;
+					font-size: 11px;
+					color: #fff;
+				}
+					.b-widgetFomIndexes .body .list .line.checked .hellip{
+						background-color: #a6a6a6;
+					}
+					.b-widgetFomIndexes .body .list .line:not(.checked):hover .hellip{
+						background-color: #888;
+					}
+		.b-widgetFomIndexes .body .arrange{
+			/*position: relative; ==graph_+20px
+			height: 1px;*/
+			width: 231px;
+			height: 20px;
+			clear: both;
+			cursor: pointer; /*click to "go to url" here*/
+		}
+			.b-widgetFomIndexes .body .arrange button.copyCode{
+				width: 32px;
+				border: none;
+				border-right: 1px solid #555;
+				border-left: 1px solid #555;
+				background: #555;
+				white-space: nowrap;
+				color: #ddd;
+				cursor: pointer;
+			}
+			.b-widgetFomIndexes .body .arrange .copyCode:hover:not(.inactive){
+				border-right: 1px solid #959595;
+				border-left: 1px solid #959595;
+				background: #a6a6a6;
+				color: #fff;
+			}
+			.b-widgetFomIndexes .body .arrange .copyCode.right{
+				/*position: absolute; ==graph_+20px
+				z-index: 5;
+				right:0;*/
+				float: right;
+			}
+			.b-widgetFomIndexes .body .arrange .copyCode.left{
+				/*position: absolute; ==graph_+20px
+				z-index: 5;*/
+				float: left;
+			}
+			.b-widgetFomIndexes .body .arrange .copyCode.inactive{
+				background: #404040;
+				cursor: default;
+			}
+	.b-widgetFomIndexes .body .graph{
+		width: 231px;
+		/*height: 148px; ==graph_+20px*/
+		height: 128px;
+		background: #eee;
+		cursor: pointer;
+	}
+	.b-widgetFomIndexes .body .dates{
+		height: 18px;
+		color: #eee;
+		font-size: 11px;
+	}
+		.b-widgetFomIndexes .body .dates .last{
+			float: right;
+		}
+
+	.b-widgetFomIndexes .foot{
+		height: 37px;
+		padding: 12px 4px 0;
+		background: #a6a6a6;
+			-moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px;
+		font-size: 13px;
+	}
+		.b-widgetFomIndexes .foot table{
+			margin: 0 auto;
+		}
+		.b-widgetFomIndexes .foot .button{
+			display: inline-block;
+			margin: 0 2px;
+			padding: 2px 4px 3px;
+			font-size:12px;
+			background: #404040;
+			border: 0;
+				-moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
+			color: #fff;
+			cursor: pointer;
+			
+		}
+		.b-widgetFomIndexes .foot .button:hover{
+			background: #555;
+		}
+.b-widgetFomIndexes .highcharts-tooltip text tspan[style*="bold"]{
+	visibility: hidden;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

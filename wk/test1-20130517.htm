@@ -1,0 +1,162 @@
+﻿<!DOCTYPE HTML>
+<html><head>
+	<title>Фильтр по введённому слову</title>
+	<meta name="Content-Type" content="text/html; charset=utf-8"/>
+	<meta name="description" content="Фильтр, пример - тест"/>
+	<link rel="stylesheet" href=css.css />
+	<!--[if IE]><script src="jquery-1.9.1.js"></script><![endif]-->
+	<![if !IE]><script src="zepto.js"></script><![endif]>
+	<script type="text/javascript" src="hilitor.js"></script>
+</head><body>
+
+<div class="b-filter">
+	<div class ="linkSide"><span class="dotAttent" title="дата написания, &copy; spmbt">2013-05-18</span>; <a href=test2-20130517.htm title="другой тест">test2</a></div>
+	<h1><span class="nList">1.</span> Фильтр по введённым словам</h1>
+	<div class="partInput">
+		<div class ="task">
+			<b>Задача.</b> На странице имеется поле ввода (поиска) и список. По мере ввода слов в поисковое поле необходимо скрывать элементы списка, в которых не найдены введенные слова. Если не найдено ничего, то скрывать весь список и выводить надпись "Ничего не найдено".
+		</div>
+		<div class ="task comment">
+			<b>Обоснование.</b> Эта задача привлекательна тем, что для демонстрации надо написать генерацию тестовых данных.
+		</div>
+		<h2>Фильтрация текстов по введённым словам</h2>
+		<i>(все слова состоят из русских или латинских букв)</i>
+		<input class="inp" value="" placeholder="ввести слово или слова через пробел"/>
+		<input class="chkSymbols" id=chk1 type="checkbox"/> <label for=chk1 class="dotAttent" title="режим посимвольной фильтрации">- знакосочетание</label>
+		<input class="hil" id=chk2 type="checkbox"/> <label for=chk2 class="dotAttent" title="дополнительно: подсветка найденных слов">- подсветка</label>
+		<div class ="task comment">
+			<i><u>Видимых записей:</u></i> <span class="nList"></span>
+		</div>
+		<div class ="task comment">
+			Делаем для начала 10 тыс. русских записей и 1 тыс. латинских.<br>
+			<br>
+			Трактовать условие скрывания в задаче можно <b>двояко</b>: то ли не найдено ни одно из введённых слов (условие "ИЛИ"), то ли запись не содержит ни одного введённого слова (условие "И"). Принимаем <b>первую</b> ("ИЛИ") трактовку как истинную, поскольку при ней результаты получаются интереснее (не пропадают при вводе несуществующего слова).<br>
+			<br>
+			Другая неоднозначная трактовка в задаче вызывает слово "список". Список чего - не уточнено. Список текстов или список слов? В решении предположили, что подразумевался <b>список фраз</b> - групп слов.<br>
+			<br>
+			Как бонус, добавляется поиск по сочетаниям символов. Он проще, но тоже интересно наблюдать результаты, зависящие от встречаемости букв.<br>
+			<br>
+			Как другой бонус - подсветка, пришедшая из задачи 2. Она добавляет необходимость удаления тегов перед сравнением и работает медленнее, но посмотреть на неё стОит. Глаза получают ориентиры; второе число после числа строк - сумма найденных совпадений. При снятии чекбокса - тоже ощутимая задержка на удаление подсветок.<br>
+			<br>
+			Проверено на процессоре e7200 в браузерах:<br>
+			<b>Chrome 25</b> - 1.5-2 секунды на расчёт;<br>
+			<b>Firefox 20</b> - 3-4 секунды;<br>
+			<b>Opera 12</b> - 9-14 секунд;<br>
+			<b>IE8</b> - 5-16 секунд.<br>
+			Эти данные говорят о быстродействии регекспов и отрисовке больших списков в браузерах.<br>
+			<br>
+			<a href="test2-20130517.htm">Перейти ко 2-му тесту</a>.<br>
+		</div>
+	</div>
+	<div class="partData">
+		<div class="netNikto hidden">Видишь - дома нет никто</div>
+	</div>
+</div>
+<script>
+	var $recS //записи в блоке с фильтром
+		,txtPrev ='' //поле ввода при прежнем событии, для опт.
+		,ww =0, ww0 =0 //таймаут для ввода символов
+		,timeWw =600; //время таймаута в мс
+	if(!window.$ && window.Zepto) window.$ = Zepto; //Opera need
+	$(function(){ //========== ready ==================
+		var $filt = $('.b-filter') //блок с фильтром
+			,$inpWords = $('.inp',$filt) //поле ввода
+			,$dat = $('.partData', $filt) //список фраз
+			,$nList = $('.comment .nList', $filt) //индикация числа видимых строк
+
+			,$hil = $('.hil',$filt) //включение подсветки
+			,hil = new Hilitor($dat[0])
+			,isHil =0
+
+			,getListTxts = function(alf, nList){ //создать список фраз по (букварь, строк)
+				alf = alf.replace(/ /g,'').match(/./g) ||[];
+				var alfL = alf.length
+					,jMin =4, jMax =33, kMax =4 //пределы числа слов в фразе и макс. число букв в слове
+					,s ='';
+				for(var i =0; i < nList; i++){ //заполнение записями
+					var jM = jMin + Math.floor(Math.random() * (jMax - jMin) );
+					s +='<li class="line">';
+					for(var j =0; j < jM; j++){ //число слов
+						s += j ?' ':'';
+						for(var k =1, kM = Math.floor(Math.random() * kMax) +1; k <= kM; k++)
+							s += alf[Math.floor(Math.random() * alfL)];
+					}
+					s +='</li>';
+				}
+				return s;
+			};
+		if(/MSIE/.test(navigator.userAgent) || /Firefox/.test(navigator.userAgent))
+			$dat.css({'text-indent':'-0.5ex'}); //хак отступов для IE/Fx
+		$dat.html($dat.html()
+			+ getListTxts('абвгдеёжзийклмнопрстуфхцчшщьыъэюя авдеиклмнопрстуыя феикмнопст анопрс п', 10000)
+			+ getListTxts('abcdefghijklmnopqrstuvwxyz abcdehijmnoprst acenops', 1000)
+		);
+		$recS = $('.line', $filt);
+		$nList.html($recS.length);
+		$inpWords.focus();
+		
+		var chkFilter  //пересчитать число видимых записей (перефильтровать)
+			,$netNi = $('.netNikto', $filt);
+		$inpWords.on({keyup: chkFilter = function(ev){
+			var th = this;
+			clearTimeout(ww); clearTimeout(ww0);
+			ww0 = setTimeout(function(){
+				if(txtPrev == th.value) //ничего не изменилось
+					return;
+				$inpWords.addClass('works');
+			}, timeWw -30);
+			ww = setTimeout(function(){
+				var txt = th.value
+					,txtS = txt.split(' ')
+					,isSymbols = $('.chkSymbols', $filt)[0].checked //посимвольный режим (иначе - по словам)
+					,count2 =0;
+				if(txtPrev == txt) //ничего не изменилось
+					return;
+				txtPrev = txt;
+				
+				for(var i = txtS.length-1; i >=0; i--) //удалить пустые строки
+					if(txtS[i] =='')
+						txtS.splice(i, 1);
+					else
+						txtS[i] ='(^| )'+ txtS[i] +'( |$)'; //..и уст.разделители вокруг непустых строк
+				if(isSymbols || !txtS.length) //посимвольный режим
+					txtS = [txt];
+				//$dat.addClass('hidden');
+				var count =0;
+				for(var i in $recS){ var rI = $recS[i]; if(rI.attributes){ //пересмотр условий скрытия записей
+					var s = isHil ? rI.innerHTML.replace(/<[^>]+>/g,'') : rI.innerHTML, brk =0;
+					for(var j in txtS){
+						var tJ = txtS[j];
+						if(RegExp(tJ).test(s)){
+							brk =1; break;}
+					}
+					if(brk){
+						$(rI).removeClass('hidden');
+						count++;
+					}else
+						$(rI).addClass('hidden');
+				}}
+				$nList.html(count);
+				if(isHil)
+					$nList.html($nList.html() +' '+ (hil.apply($inpWords[0].value) ||0) );
+				if(!txt.length && isHil)
+					hil.remove();					
+				$dat.removeClass('hidden');
+				$inpWords.removeClass('works');
+				if(count)
+					$netNi.addClass('hidden');
+				else
+					$netNi[0].className ='netNikto';
+		},timeWw);}, mouseup: chkFilter});
+		$hil.on({click: function(){
+			var count2 =0; 
+			isHil = $hil[0].checked ?1:0;
+			if(isHil){
+				count2 += hil.apply($inpWords[0].value) ||0;
+				$nList.html($nList.html() +' '+ count2);
+			}else
+				hil.remove();
+		}});
+	});
+</script>
+</body></html>

@@ -1,0 +1,250 @@
+/*zad1.css*/
+
+*{
+	margin:0;
+}
+html{
+	height:100%;
+	overflow:hidden;
+}
+body{
+	background-color:#63696b;
+	/*position:relative;*/
+	min-height:100%;
+	overflow:hidden;
+}
+*html body{
+	height:100%;
+}
+.headerText{
+	color:white;
+	font-family:Verdana,Arial,Helvetica;
+}
+#top1{
+	background-image:url(top1BgBig-1.png);
+	background-color:#2479ad;
+	width:100%;
+	font-size:12px;
+	font-family:Arial,Helvetica;
+}
+#top1_1{
+	height:25px;
+	padding:6px 0 5px 151px;
+}
+#top1menu{
+	border:0;
+	border-collapse:collapse;
+	width:864px;
+	table-layout:fixed;
+}
+#top1menu td{
+	padding:0px;
+	padding:3px 5px 5px 5px;
+	white-space: nowrap;
+}
+#top1menu td .top1Bold{
+	text-decoration: underline;
+	font-weight:bold;
+}
+.top1normalText{
+	font-weight:normal;
+	cursor:pointer;cursor:hand;
+}
+.top1raquo{ /*image*/
+	width:11px;
+	height:13px;
+	vertical-align:middle;
+}
+.menuSub{ /*sub menu*/
+	display:none;
+	position:absolute;
+	border:1px solid #2597bd;
+	background-color:white;
+	margin-top:16px;
+	margin-left:-6px;
+	background:white;
+	color:black;
+	cursor:pointer;cursor:hand;
+}
+.menuSubSub{ /*submenu element*/
+	width:100%;
+}
+.menuSubSub div{
+	padding:2px 3px;
+}
+.menuSubSubDelimBot{ /* submenu element, bottom separator*/
+	margin-bottom:3px;
+	border-bottom-style:solid;
+	border-bottom-color:#24759c;
+	border-bottom-width:1px;
+	width:100%;
+}
+.menuSubSubDelimBot div{
+	padding:2px 3px;
+}
+.menuSubSubDelimTop{ /* submenu element, had top separator*/
+	width:100%;
+}
+.menuSubSubDelimTop div{
+	padding:4px 3px 2px 3px;
+}
+
+
+#top2{
+	background-image:url(top2Bg.png);
+	background-color:#52555a;
+	width:100%;
+	font-size:23px;
+}
+#top2_1{
+	height:33px;
+	padding:3px 0 7px 142px;
+}
+.top2raquo{ /*image*/
+	width:17px;
+	height:9px;
+	padding-right:4px;
+	vertical-align:middle;
+}
+#logoArion{
+	background-image:url(logo2Arion.png);
+	margin-left:24px;
+	position:absolute;
+	top:0px;
+	width:104px;
+	height:60px;
+}
+#top2span{
+	white-space: nowrap;
+}
+#top3{
+	background-image:url(top3Bg.png);
+	background-color:#eff7f7;
+	padding:7px 8px;
+	height:31px;
+	font-size:12px;
+	font-family:Arial,Helvetica;
+	white-space: nowrap;	
+}
+#top3 input{
+	height:16px;
+	margin-left:3px;
+}
+#top3in1{
+	width:324px;
+	margin-right: 12px;
+	color:#bbb;
+}
+#top3in2{
+	width:126px;
+	margin-right: 8px;
+}
+#top3butt1{
+	height:26px;
+	width:100px;
+	background-image:url(buttonBg.png);
+	color:white;
+	border:0;
+	margin-right: 11px;
+	font-family:Arial,Helvetica;
+	font-weight:bold;
+}
+
+#body1{
+	padding:0 4px 14px 4px;
+	background-color:#63696b;
+}
+#body1_1{
+	padding: 12px 10px;
+	background-color:#fff;
+	width:98%;
+	overflow:auto;
+	overflow-x:hidden;
+}
+#body1tb{
+	width:100%;
+	border-collapse:collapse;
+}
+#body1tb td{
+	border:1px solid #9c9a9c;
+}
+
+
+
+
+
+
+
+
+
+.tbTop{
+	background-image:url(tableTop.png);
+	background-color:#7b7d84;
+	color:white;
+	font-size:12px;
+	font-family:Arial,Helvetica;
+	font-weight:bold;
+}
+.tbTop td{
+	height:30px;
+	padding: 0 6px;
+}
+.tbTrEven{ /*gray,first*/
+	background-color:#eee;
+}
+.tbTrOdd{
+	background-color:#fff;
+}
+.tbTrEven td,.tbTrOdd td{
+	height:25px;
+	padding:0 8px;
+	font-size:12px;
+	font-family:Arial,Helvetica;
+}
+
+.menuItemHighlight{
+	background-color:#2697bd;
+}
+
+
+
+#bottom1{
+	background-image:url(bottomBg.png);
+	background-color:#248bb4;
+	height:32px;
+	width:100%;
+	position:absolute;
+	bottom:0;
+	/*margin-bottom:3px;*/
+	border-top-style:solid;
+	border-top-color:white;
+	border-top-width:1px;
+	text-align:right;
+	font-size:11px;
+}
+#bottom1_1{
+	padding-right: 6px;
+}
+#bottomPicInstall,
+#bottomPicLogin{ /*image*/
+	height:32px;
+	width:15px;
+	vertical-align:middle;
+	margin-left:8px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

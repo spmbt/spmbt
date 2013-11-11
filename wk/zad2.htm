@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> 
+	<head><title>Задание 2, Горячев Д.Б., 24.04.2009</title>
+<style type="text/css">
+#palet{
+	border-collapse:collapse;
+}
+#palet td{
+	border:1px solid #DEDFDE;
+	width:18px;
+	height:14px;
+	font-size:6px;
+}
+#colorSel{
+	position:absolute;
+	display:none;
+	width:400px;
+}
+</style>
+
+<!--colorSel -->
+<script type="text/javascript" src="img2/zad2.js"></script>
+<!--end of colorSel-->
+</head>
+<body>
+<p style="width:480px;text-align:justify;">
+	2.  Сделать селектор  цвета.  На  экране расположена  кнопка,  при нажатии  на
+	которую   появляется  перетаскиваемое   и  закрываемое   «окно»  с   таблицей,
+	позволяющей выбрать  цвет. При наведении  мышки на ячейку таблицы  цвет должен
+	отображаться  в  области  снизу,  при  нажатии —  окно  должно  закрываться  и
+	выбранный  цвет ставиться  фоновым цветом  кнопки. Также  должна быть  кнопка,
+	позволяющая  убрать   выбранный  цвет.  Желательно   использование  библиотеки
+	mochikit   <http://mochikit.com/>,   обязательна  самостоятельная   разработка
+	js-компоненты, а не  копирование из каких-либо примеров. Скриншоты  — в файлах
+	color-btn-1-3.png.
+</p>
+<p style="width:480px;text-align:justify;">
+Кнопка для выбора цвета из палитры: <button id="colorButton" style="width:24px;height:24px;" onclick="color_select(this);"> ... </button>
+</p>
+
+<p>(Проверено в IE6, FF2, Opera9.24.)</p>
+
+<div id="colorSel" style="top:40px;left:360px;">
+	<div id="colorTableTop" onmousedown="colorSelDrag(event,this)"
+		style="width:400px;height:27px;background:url(img2/headerWindow-1.png);cursor:move;">
+		<div style="float:right;width:19px;height:19px;margin:5px 4px;background:url(img2/buttonClose.png);cursor:pointer;cursor:hand;"
+			onclick="g('colorSel').style.display='none';"></div>
+		<div style="padding-top:5px;margin-left:5px;">
+			<img src="img2/headerRaquo.png" alt="" /><span
+				style="font-weight:bold;color:white;font-size:12px;font-family:Arial,Helvetica;">Выбор цвета</span>
+		</div>
+	</div>
+  <div id="colorTableBody" style="border:solid #acacac;border-width:0 1px;padding:10px 9px 7px 9px;background-color:#fff;">
+		<script type="text/javascript">
+		d=document;
+		g=function(X){return d.getElementById(X);}
+		var a="000000,000240,020876,0411AC,0718D6,0A1EFE,  034100,024040,044076,0640AC,083ED6,0B3EFE,   0A7902,0A7A40,0B7976,0D79AC,0E79D6,1078FE,   FDA810,FEA943,FEA877,FEA8AC,FEA7D7,FEA7FF,   FED712,FED743,FED678,FED7AC,FED6D7,FED6FF,   FFFE14,FFFE44,FFFE78,FFFEAD,FFFFD7,FFFFFF".match(/[0-9A-F]{6}/g);
+		//выписаны 2 из 12 строчек кодов цветов для таблицы, далее они размножены
+			var Cols=18;
+			var j=0;
+			var s='';
+			while(a[j]!=null)
+				s+=(j%Cols==0?'<tr>':'')+'<td style="background-color:#'+a[j]+'"></td>'
+					+(++j%Cols==0?'</tr>':'');
+			s+=s+s+s+s+s; //размножение 2 строчек цветов 6 раз (для демонстрации)
+			d.write('<center><table id="palet">'+s+'</table></center>');
+			g('palet').onmouseover=color_over;
+			g('palet').onmouseout=function(){
+				color_over(null,g('colorButton')); //возврат к текущему цвету
+			};
+			g('palet').onclick=color_click;
+		</script>
+	</div>
+	<div id="colorTableBottom"
+		style="width:400px;height:33px;background:url(img2/footerWindow-1.png);font-size:12px;font-family:Arial,Helvetica;">
+		<table style="border-collapse:collapse;width:100%;height:33px;"><tr>
+			<td style="padding-left:10px;">
+				Выбранный цвет:
+			</td>
+			<td>
+				<div id="cTableExample" style="width:22px;height:22px;border:1px solid #ddd;"></div>
+			</td>
+			<td style="padding-left:4px;">
+				<div id="cTableValue" style="width:60px;font-size:13px;font-family:Lucida Console, Courier;">#123456</div>
+			</td>
+			<td style="padding-right:10px;text-align:right;" onclick="color_del()">
+				<button style="width:175px;height:25px;background:url(img2/button.png) #7FB6C9;font-weight:bold;color:white;font-size:12px;font-family:Arial,Helvetica;border:0;">Без цвета</button>
+			</td>
+		</tr></table>
+	</div>
+</div>
+</body></html>
+
+
+
+
+
+
+
+
+
+
+
+

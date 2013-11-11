@@ -1,0 +1,151 @@
+﻿<!DOCTYPE HTML>
+<html><head>
+	<title>Выделение найденных слов</title>
+	<meta name="Content-Type" content="text/html; charset=utf-8"/>
+	<meta name="description" content="Фильтр, пример - тест"/>
+	<link rel="stylesheet" href=css.css />
+	<!--[if IE]><script type="text/javascript" src="jquery-1.9.1.js"></script><![endif]-->
+	<![if !IE]><script type="text/javascript" src="zepto.js"></script><![endif]>
+	<script type="text/javascript" src="hilitor.js"></script>
+</head><body>
+
+<div class="b-filter">
+	<div class ="linkSide"><span class="dotAttent" title="дата написания, &copy; spmbt">2013-05-18</span>; <a href=test1-20130517.htm title="другой тест">test1</a></div>
+	<h1><span class="nList">2.</span> Выделение найденных слов</h1>
+	<div class="partInput">
+		<div class ="task">
+			<b>Задача.</b> На странице имеется поле ввода (поиска) и текст с разметкой. По мере ввода слов в поисковое поле необходимо подсвечивать найденные слова в тексте. Вывести количество совпадений. Реализовать на чистом JavaScript без использования innerHTML.
+		</div>
+		<div class ="task comment">
+			<b>Обоснование.</b> Решение даёт полезный инструмент выделения слов в текстах.
+		</div>
+		<h2>Подсветка введённых слов</h2>
+		<i>(все слова состоят из русских или латинских букв)</i>
+		<input class="inp" value="" placeholder="ввести слово или слова через пробел"/>
+		<div class ="task comment">
+			<i><u>Совпадений:</u></i> <span class="nList"></span>
+		</div>
+		<div class ="task comment">
+			Из-за разметок заполнение работает медленнее раз в 5. И подсветки тоже небыстры. Поэтому делаем 2 тыс. русских записей и 200 латинских, чтобы получить сопоставимое с первым тестом время выполнения.<br>
+			<br>
+			Поскольку используется каркас первого теста и совершенно очевидно, как удалять jQuery/Zepto из кода, работа с селекторами оставлена неизменной - через библиотеки. Ядро же решения задачи сделано, как требуется, на чистом JS.<br>
+			<br>
+			Из-за большого массива случайных слов наблюдение результатов будет не так наглядно, как хотелось бы. Поэтому в первую задачу перенесена техника подсветки, разработанная в этой задаче. При удалении неподсвеченных строк выделения отображаются компактно и наглядно.<br>
+			<br>
+			Из-за проблем работы границ слов (\b) с кириллицей оригинальный алгоритм переделан под работающий на основе другого регулярного выражения.<br>
+			<br>
+			На процессоре e7200 время выставления подсветок в браузерах:<br>
+			<b>Chrome 25</b> - 2000 за секунду;<br>
+			<b>Firefox 20</b> - 100 за секунду;<br>
+			<b>Opera 12</b> - 300;<br>
+			<b>IE8</b> - 400 подсветок за секунду.<br>
+			Это - данные о скорости перерисовок нод.<br>
+			<a href="test1-20130517.htm">Вернуться к 1-му тесту</a>.<br>
+			<br>
+		</div>
+		<h2>Общие замечания</h2>
+		<ul class ="task comment">
+			<li>Какие особенности сделаны в 2 решениях.</li>
+			<li>В решениях использован общий каркас HTML и CSS, общая генерация тестового массива, так как часть решений похожа друг на друга.</li>
+			<li>Постановка задач и особенности решений описаны на страницах решений.</li>
+			<li>Имеется общая часть JS. Но, так как задачи не связаны и имеют произвольные различия, выделения общей части не делалось.</li>
+			<li>CSS Reset не сделано, т.к. это не принципиальная часть задачи.</li>
+			<li>%75 кодов работает на оформление - оно не нужно для решения, но делает страницу удобочитаемой и предоставляет необходимую информацию и ссылки.</li>
+			<li>Контейнер решения оформлен как независимый блок, все стили которого зависят от контейнера блока.</li>
+			<li>Нет перфекционистского следования точности оформления списков.</li>
+			<li>Объём списка выбран таким, чтобы показать задержки алгоритма.</li>
+			<li>Включение пересчёта фильтрации списка индицируется цветом подложки поля ввода.</li>
+			<li>Чтобы пересчёт не происходил с каждым набранным символом, установлены задержки и отмены пересчётов (0.6 с - время задержки).</li>
+			<li>jQuery/Zepto, а не просто jQuery, выбрано как вариант, теоретически улучшающий скорость работы в не-IE-браузерах. Не составляет необходимости для решения данных задач.</li>
+		</ul>
+	</div>
+	<div class="partData">
+	</div>
+</div>
+<script>
+	var $recS //записи в блоке с фильтром
+		,txtPrev ='' //поле ввода при прежнем событии, для опт.
+		,ww =0, ww0 =0 //таймаут для ввода символов
+		,timeWw =600; //время таймаута в мс
+	if(!window.$ && window.Zepto) window.$ = Zepto; //Opera need
+	$(function(){ //========== ready ==================
+		var $filt = $('.b-filter') //блок с фильтром
+			,$inpWords = $('.inp',$filt) //поле ввода
+			,$dat = $('.partData', $filt) //список фраз
+			,$nList = $('.comment .nList', $filt) //индикация числа видимых строк
+			
+			,hil = new Hilitor($dat[0])
+
+			,getListTxts = function(alf, nList){ //создать список фраз по (букварь, строк)
+				alf = alf.replace(/ /g,'').match(/./g) ||[];
+				var alfL = alf.length
+					,jMin =4, jMax =33, kMax =4 //пределы числа слов в фразе и макс. число букв в слове
+					,s ='';
+				for(var i =0; i < nList; i++){ //заполнение записями
+					var jM = jMin + Math.floor(Math.random() * (jMax - jMin) )
+						,tagOn =0, tagOn2 =0;
+					s +='<li class="line">';
+					for(var j =0; j < jM; j++){ //число слов
+						s += j ?' ':'';
+						if(Math.random() <0.02 && !tagOn2){ //разметка 2 (по задаче, охват 2 слов)
+							s +='<u>'; tagOn2 =3;}
+						if(Math.random() <0.07){ //разметка (по задаче, на слово)
+							s +='<i>'; tagOn =1;}
+						for(var k =1, kM = Math.floor(Math.random() * kMax) +1; k <= kM; k++)
+							s += alf[Math.floor(Math.random() * alfL)];
+						if(tagOn){
+							s +='</i>'; tagOn =0;}
+						if(tagOn2 ==1 || tagOn2 && j == jM -1){
+							s +='</u>'; tagOn2 =0;}
+						if(tagOn2)
+							tagOn2--;
+					}
+					s +='</li>';}
+				return s;
+			};
+		if(/MSIE/.test(navigator.userAgent) || /Firefox/.test(navigator.userAgent))
+			$dat.css({'text-indent':'-0.5ex'}); //хак отступов для IE/Fx
+		if(/MSIE/.test(navigator.userAgent) ) //деградация плейсхолдера - IE
+			$inpWords.attr('title', $inpWords.attr('placeholder') );
+		$dat.html($dat.html()
+			+ getListTxts('абвгдеёжзийклмнопрстуфхцчшщьыъэюя авдеиклмнопрстуыя феикмнопст анопрс п', 2000)
+			+ getListTxts('abcdefghijklmnopqrstuvwxyz abcdehijmnoprst acenops', 200)
+		);
+		$recS = $('.line', $filt);
+		$nList.html(0);
+		$inpWords.focus();
+		
+		var chkFilter;  //пересчитать число видимых записей (перефильтровать)
+		$inpWords.on({keyup: chkFilter = function(ev){
+			var th = this;
+			clearTimeout(ww); clearTimeout(ww0);
+			ww0 = setTimeout(function(){
+				if(txtPrev == th.value) //ничего не изменилось
+					return;
+				$inpWords.addClass('works');
+			}, timeWw -30);
+			ww = setTimeout(function(){
+				var txt = th.value
+					,txtS = txt.split(' ');
+				if(txtPrev == txt) //ничего не изменилось
+					return;
+				txtPrev = txt;
+				
+				for(var i = txtS.length-1; i >=0; i--) //удалить пустые строки
+					if(txtS[i] =='')
+						txtS.splice(i, 1);
+					else
+						txtS[i] ='(^| )'+ txtS[i] +'( |$)'; //..и уст.разделители вокруг непустых строк
+				//$dat.addClass('hidden');
+				var count =0;
+				count += hil.apply(txt) ||0;
+				if(!txt.length)
+					hil.remove();
+				if(window.console) console.log(hil.getRegex() );
+				$nList.html(count);
+				$dat.removeClass('hidden');
+				$inpWords.removeClass('works');
+		},timeWw);}, mouseup: chkFilter, paste: chkFilter});
+	});
+</script>
+</body></html>
