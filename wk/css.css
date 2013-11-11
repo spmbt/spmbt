@@ -1,0 +1,24 @@
+
+/* для тестов 1 и 2 фильтрации и выделения слов по образцу */
+.b-filter .partInput{float: left; width: 280px;}
+	.b-filter .linkSide{float: right}
+		.b-filter .dotAttent{border-bottom: 1px dotted #999}
+	.b-filter h1{margin: 0 0 6px; font-size: 22px;}
+	.b-filter h2{margin: 6px 0; font-size: 18px;}
+.b-filter .partInput input.inp{width: 100%}
+	.b-filter .partInput input.inp.works{background-color: #edb}
+	.b-filter .comment{font-style: italic}
+	.b-filter ul.comment{margin-left: -3ex}
+		.b-filter .nList{color: #e66}
+.b-filter .partData{
+	min-height: 220px;
+	margin-left: 292px;
+	padding: 0 5px 0 4ex;
+	text-indent: -3ex;
+	border: 1px solid darkblue;
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+}
+.b-filter .partData .line{margin: 5px 0; line-height: 0.95}
+	.b-filter .partData .line i{color: #aaa}
+.b-filter .partData .netNikto{text-align: center; margin-top: 80px; font-size: 36px; color: #ddd}
+.b-filter .hidden{display: none}

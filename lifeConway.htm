@@ -1,0 +1,372 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script>
+g = function(X){return document.getElementById(X);}
+isIE = document.all && !self.opera;
+GameLife = function(conf){ //конструктор игрового поля
+  conf = conf || {};
+  if(conf.w ==null) conf.w = 402; //параметры, не будут жить как замыкания
+  if(conf.h ==null) conf.h = 321;
+  if(conf.o ==null) conf.o = g('dbGL1');
+  this.cvs = conf.cvs;
+  var o = conf.o;
+  var GL = this;
+  var w = conf.w, //живут как замыкания
+    h = conf.h,
+    z = conf.z;
+  this.gen =0; //номер поколения
+  this.a = new Array(w * (h +2) +2); //рабочий массив
+  var a = this.a,
+    iStop = w +1,
+    iStart = w * h -1,
+    okr; //счётчик окружения
+  //Внести начальные условия "Случайный фон"
+  this.initRandom = function(k){ //k- плотность заполнения
+    if(k ==null) k = GL.checkRule() !=2 ? 1/6 : 1/2;
+    for(var i = iStart; i >=0; i--)
+      {a[i] = Math.random() / k >1 ? 0 : 1;}
+    GL.set('gen', 0);
+  }
+  this.initGrid = function(k){ //блоки в матрицу, кратную 3
+    for(var i = iStart; i >=0; i--)
+      {a[i] = i %3 && Math.floor((i - iStart -1)/w) %3 ? 1 : 0;}
+    a[Math.floor(h/2) * w + Math.floor(w/2) -1] =1;
+    if(GL.checkRule() ==2) a[Math.floor(h/2) * w + Math.floor(w/2) -2] =1;
+    GL.set('gen', 0);
+  }
+  this.initLib = function(itm){ //заполнение из библиотеки (itm -- элемент {имя, x, y, поворот, зеркало })
+    // элемент библиотеки - в формате игрового поля, что помогает теми же методами
+    //   выводить их и оптимизировать поле - расширять, менять границы
+    for(var i = iStart; i >=0; i--) a[i] =0;
+    var bas = Math.floor(h/2) * w + Math.floor(w/2); //для примера, поле с "радиксом"
+    gL1.checkRule();
+    if(GL.rule !=11){a[bas] =1; a[bas+w] =1; a[bas+w-1] =1; a[bas+w+1] =1; a[bas+w+w+1] =1;}
+    else{a[bas+w] =1; a[bas+w-1] =1; a[bas+w+1] =1; a[bas+w+w+2] =1; a[bas+w+w-1] =1;} //"квант" для клона
+    if(GL.checkRule() ==2){ //генерирование фрагмента по произвольному массиву
+      bas -= w *20 +21;
+      var s=[
+      ".OOOO.....OOO...........OOO..",
+      "..OO....OOOO.O.........O.O.O.",
+      "O.OO....OOOOOO.........OOOOO.",
+      "..OO....OOOO.O........OOOOOOO",
+      ".OOOO.....OOO...........OOO..",
+      ".............................",
+      "........................OOO..",
+      ".........................O..."];
+      for(i =0; i < s.length; i++){
+        for(var j =0; j <s[i].length; j++){
+          a[bas + w * i +j] = s[i].charAt(j).toLowerCase() =='o' ? 1 : 0;
+        }
+      }
+    }
+    GL.set('gen', 0);
+  }
+  
+  //шаг поколения //вычитающие циклы везде- потому что условия проверки проще
+  this.step = function(n, rule){ //(число проходимых поколений (циклов), код правил игры)
+    if(n ==null) n =1;
+    if(rule ==null) rule =0;
+    for(var iN =0; iN < n; iN++){
+      var w1 = iStop,
+        w1m = w -1;
+      for(var i2 =  w1 + w, i = iStart + i2+1; i2 >=0; i--, i2--){
+        a[i] = a[i2]; //дублирование; 2 счётчика- чтобы быстрее
+      }
+      if(rule==0){ //классические правила на логике
+        for(i = iStart + w1; i >= w1; i--){ //основной цикл; на 11% быстрее матричного
+          okr = a[i-w1] + a[i-w] + a[i-w1m]
+            + a[i-1] + a[i+1]
+            + a[i+w1m] + a[i+w] + a[i+w1];
+          if(okr ==3) a[i+w1] = 1;
+          else{
+            if(okr !=2) a[i+w1] =0;
+            else a[i+w1] = a[i];
+          }
+        }
+      }
+      if(rule <10 && rule >=1){ //правила на матрице
+        if(rule==1){ //классические правила на матрице
+          var prav = [0,0,0,1,0, 0,0,0,0,0,   0,0,1,1,0, 0,0,0,0,0]; //правило поколения (классика)
+          //var prav = [0,0,0,1,0, 0,1,1,1,1,   0,0,0,1,1, 0,1,1,1,1]; //правило поколения (другое)
+          for(i = iStart + w1; i >= w1; i--){ //основной цикл (180*150, 1000 поколений за 4.5 с. (Opera 10.51)
+            okr = a[i-w1] + a[i-w] + a[i-w1m]
+              + a[i-1] + a[i+1]
+              + a[i+w1m] + a[i+w] + a[i+w1];
+            a[i+w1] = prav[10*a[i] + okr];
+          }
+        }
+        if(rule==2){
+          var prav = [0,0,0,1,0, 0,1,1,1,1,   0,0,0,1,1, 0,1,1,1,1]; //правило поколения (DayNight)
+          for(i = iStart + w1; i >= w1; i--){ //основной цикл
+            okr = a[i-w1] + a[i-w] + a[i-w1m]
+              + a[i-1] + a[i+1]
+              + a[i+w1m] + a[i+w] + a[i+w1];
+            a[i+w1] = prav[10*a[i] + okr];
+          }
+        }
+      }
+      if(rule ==11){ //правила с учётом молодости точек
+        var prav = [0,0,0,0,0, 0,0,0,0,0,   0,0,5,5,5, 5,0,0,0,0,   0,0,0,0,0, 0,0,0,0,0,  0,0,0,0,0, 0,0,0,0,0,0
+                   ,0,0,0,0,0, 0,0,0,0,0,   0,0,0,0,0, 0,0,0,0,0,   0,0,0,0,0, 0,0,0,0,0,  0,0,0,0,0, 0,0,0,0,0,0
+                   ,0,0,0,0,0, 0,0,0,0,0,   0,0,0,0,0, 0,0,0,0,0,   0,0,0,0,0, 0,0,0,0,0,  0,0,0,0,0, 0,0,0,0,0,0
+                   ,0,0,0,0,0, 0,0,0,0,0,   0,0,0,0,0, 0,0,0,0,0,   0,0,0,0,0, 0,0,0,0,0,  0,0,0,0,0, 0,0,0,0,0,0
+                   ,0,0,0,0,0, 0,0,0,4,4,   4,4,4,0,0, 0,0,0,0,0,   0,0,0,0,0, 0,0,0,0,0,  0,0,0,0,0, 0,0,0,0,0,0
+                   ,4,4,4,4,4, 4,4,4,4,4,   4,4,4,4,4, 4,4,4,4,4,   4,4,4,4,4, 4,4,4,4,4,  4,4,4,4,4, 4,4,4,4,4,4];
+        for(i = iStart + w1 + w1; i >=0; i--){if(a[i] ==1) a[i] =4;}
+        for(i = iStart + w1; i >= w1; i--){ //основной цикл
+          okr = a[i-w1] + a[i-w] + a[i-w1m]
+            + a[i-1] + a[i+1]
+            + a[i+w1m] + a[i+w] + a[i+w1];
+          a[i+w1] = prav[41*a[i] + okr];
+        }
+      }
+      /* код, неудачный для FF
+      a.splice(0, w1+w1);
+      for(i = w; i >=0; i--){
+        a.splice(0, 0, a.pop()); //перемещение вычисленных в начало
+      }*/
+      var b=[];
+      b = a.slice(iStart +w1+1, iStart +w1+w1+1).concat(a.slice(w1+w1, iStart+w1+1));
+      a=b;
+      GL.set('gen', ++gL1.gen); //номер поколения
+    }
+  }
+  this.show = function(mthd, o){ //вывод (метод, объект) (10с. за 1000 циклов 180*150
+    if(o ==null) o = g('dGL');
+    if(!GL.cvs){
+      if(mthd =='pre'){
+        //try{
+        if(GL.rule !=11) var s = a.join('').replace(/0/g,'\xb7').replace(/1/g,'o');
+        else var s = a.join('').replace(/0/g,'\xb7').replace(/[14]/g,'o').replace(/5/g,'s');
+        o.innerHTML = s.match(RegExp('.{'+w+'}', 'g')).join('<br/>');
+        //}catch(ee){alert([ee,a.join('').match(RegExp('.{'+w+'}', 'g')).length])}
+      }
+    }else{ //заполнение canvas
+      GL.cvs.width = GL.cvs.width;
+      var q = GL.cvs.getContext('2d');
+      q.fillStyle = "#a75";
+      q.strokeStyle = "#742"; //обод фишки
+      q.beginPath();
+      var l = iStart,
+        pi2 = Math.PI *2,
+        z2 = z /2,
+        z21 = z /2.3, //для радиуса
+        z3 = z /4 *3,
+        z6 = z /8 *3,
+        grid = 0.5,
+        rect = 0.7,
+        x = z*w -z2,
+        y = z*h -z2;
+      if(!GL.rect){
+        if(GL.grid){
+          do{
+            x -= z;
+            if(x <0){
+              x = z*w -z2;
+              y -= z;
+            }
+            q.moveTo(x + z2, y);
+            q.arc(x, y, a[l] ? z21 : grid, 0, pi2,!1);
+          }while(--l >=0);
+        }else{
+          do{
+            x -= z;
+            if(x <0){
+              x = z*w -z2;
+              y -= z;
+            }
+            if(a[l] ==0) continue;
+            q.moveTo(x + z2, y);
+            q.arc(x, y, z21, 0, pi2,!1);
+          }while(--l >=0);
+        }
+      }else{
+        if(GL.grid){
+          do{
+            x -= z;
+            if(x <0){
+              x = z*w -z2;
+              y -= z;
+            }
+            q.moveTo(x + z2, y);
+            q.rect(x +(a[l]?0:z6), y +(a[l]?0:z6), a[l]?z3:rect, a[l]?z3:rect);
+          }while(--l >=0);
+        }else{
+          do{
+            x -= z;
+            if(x <0){
+              x = z*w -z2;
+              y -= z;
+            }
+            if(a[l] ==0) continue;
+            q.moveTo(x + z2, y);
+            q.rect(x, y, z3, z3);
+          }while(--l >=0);
+        }
+      }
+      q.closePath();
+      //q.stroke();
+      q.fill();
+    }
+  }
+  this.set = function(oId, val){ //показ значений
+    if(!isIE)
+      o.querySelector('.gen #' + oId).innerHTML = val;
+    else
+      g(oId).innerHTML = val;
+  };
+  this.checkRule = function(){
+    var ll = document.getElementsByName('rule').length;
+    for(var ii=0; ii < ll; ii++){
+      if(document.getElementsByName('rule')[ii].checked) break;
+    }
+    if(ii < ll) GL.rule = document.getElementsByName('rule')[ii].value;
+    else{ GL.rule = 0; document.getElementsByName('rule')[0].checked = 'checked'; }
+    return GL.rule;
+  },
+  this.initCvs = function(){
+    g('dGL').innerHTML = '';
+    if(!o.querySelector('#dGL canvas')){
+      var c = document.createElement('canvas');
+      c.width = w * z;
+      c.height = h * z;
+      o.querySelector('#dGL').appendChild(c);
+    }else{
+      var c = o.querySelector('#dGL canvas');
+    }
+    GL.cvs = o.querySelector('#dGL canvas');
+    GL.rect = g('rect').checked;
+    GL.grid = g('grid').checked;
+    var pi2 = Math.PI *2;
+    var q = c.getContext('2d');
+    q.fillStyle = "#a75";
+    q.strokeStyle = "#742";
+      q.beginPath();
+      q.arc(75, 75, 2.6, 0, pi2,!1);
+      q.moveTo(75+9, 75);
+      q.arc(75+6, 75, 2.6, 0, pi2,!1);
+      q.moveTo(75+15, 75);
+      q.arc(75+12, 75, 2.6, 0, pi2,!1);
+      q.moveTo(75+18, 75);
+      q.arc(75+18, 75, 0.6, 0, pi2,!1);
+      q.closePath();
+      q.stroke();
+      q.fill();
+  }
+};
+initGL1 = function(){
+  //if(!document.all && self.sidebar) g('dGL').style.lineHeight = '5px'; //уменьшено для FF
+  if(window.gL1 && !isIE){  delete gL1;  }
+  gL1 = new GameLife({ //определять по onload, потому что есть ссылки на DOM
+    w: Number(g('width').value), //ширина
+    h: Number(g('height').value), //высота
+    z: g('size').value, //размер элемента
+    o: g('dbGL1'), //старший объект
+    cvs: g('cvs').checked //рисовать ли на canvas
+  });
+  g('dGL').style.fontSize = g('size').value +'px';
+  if(g('cvs').checked){
+    gL1.initCvs();
+  }
+};
+if(isIE) onload = initGL1;
+else window.addEventListener("DOMContentLoaded", initGL1, !1);
+doInitRandom = function(){
+  initGL1();
+  gL1.initRandom();
+  gL1.show('pre');
+}
+doInitGrid = function(){
+  initGL1();
+  gL1.initGrid();
+  gL1.show('pre');
+}
+doInitLib = function(){
+  initGL1();
+  gL1.initLib();
+  gL1.show('pre');
+}
+doStep2 = function(){
+  gL1.step(null, gL1.checkRule()); //шаг игры и выбор правил
+  for(var i =0; i <1; i++){ //для замеров скорости отображения
+    gL1.show('pre');
+  }
+  gL1.set('time', new Date()-gL1.t); //показ таймера
+  ++gL1.wwi; //номер поколения
+  if(gL1.ww && gL1.wwi >=gL1.stepN) clearInterval(gL1.ww);
+}
+doStep = function(n){
+  if(self.gL1.a[0]==undefined) {alert('Нет поля');return;}
+  if(n ==null) n =1;
+  gL1.stepN = n;
+  gL1.t = new Date(); //установка таймера
+  gL1.set('time', 0);
+  gL1.set('gen', 0);
+  gL1.wwi =0;
+  gL1.ww = setInterval(doStep2, 1);
+}
+</script>
+<style>
+#dGL{
+  white-space: pre;
+  margin-left: 120px;
+  min-height: 140px;
+  padding: 1px 3px;
+  border: 1px solid #888;
+  line-height: 7px;
+  font-size: 12px;
+  font-family: Lucida Console, Courier;
+}
+#dGL canvas{
+  background: #f0eee8;
+  border: 2px solid #f0eee8;
+}
+.dbGL{
+  float: left;
+  width: 120px;
+}
+.bGL{
+  display: block;
+  float: right;
+  clear: both;
+  max-width: 116px;
+  margin: 2px 4px;
+  border: 1px solid #888;
+  white-space: nowrap;
+  font-size: 10px;
+}
+.gen{
+  float: right;
+  clear: both;
+  padding: 0 4px;
+}
+.gen #gen{color: #b33;}
+
+</style>
+</head><body>
+Реализация игры "Жизнь" на Javascript для статьи habr.ru, 11.01.2011, &copy; spmbt.<br/>
+<div id="dbGL1">
+<div class="dbGL">
+  <button class="bGL" onclick="doInitRandom();">Init Random</button>
+  <button class="bGL" onclick="doInitGrid();">Init Grid</button>
+  <button class="bGL" onclick="doInitLib();">Init "r"</button>
+  <button class="bGL" onclick="doStep();">1X Step</button>
+  <div class="gen"><button class="bGL" onclick="doStep(g('times').value);" style="display: inline; float: none;" title="Step*NNN">X</button><input id="times" value="100" size="4" /></div>
+  <button class="bGL" onclick="if(gL1.ww) clearInterval(gL1.ww);" title="stop">.</button><br>
+  <div class="gen">Время: <b id='time'>0</b></div>
+  <div class="gen">Поколение: <b id='gen'>0</b></div>
+  <div class="gen">Классика <input type="radio" name="rule" value="0" checked="checked" /></div>
+  <div class="gen">Кл. на матр. <input type="radio" name="rule" value="1" /></div>
+  <div class="gen">DayNight <input type="radio" name="rule" value="2" /></div>
+  <div class="gen">Sidorov's <input type="radio" name="rule" value="11" /></div>
+  <div class="gen">Ширина <input id="width" value="180" size="5" /></div>
+  <div class="gen">Высота <input id="height" value="150" size="5" /></div>
+  <div class="gen">на canvas <input type="checkbox" id="cvs" onchange="g('size').value = this.checked?6:12;" /></div>
+  <div class="gen">размер <input id="size" value="12" size="2" /></div>
+  <div class="gen">rect <input type="checkbox" id="rect" /></div>
+  <div class="gen">сетка <input type="checkbox" id="grid" /></div>
+</div>
+<div id=dGL></div>
+</div>
+</body></html>
