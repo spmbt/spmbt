@@ -1,0 +1,17 @@
+<alldata allIndexLink="http://fom.ru/indexes.html" copyCode="&lt;object height='323' width='235'&gt;&lt;param value='http://fom.ru/uploads/widget/widgetSlide.swf' name='movie'&gt;&lt;param value='high' name='quality'&gt;&lt;param value='transparent' name='wmode'&gt;&lt;param value='data1=/uploads/files/xml&amp;data0=/uploads/files/index' name='flashvars'&gt;&lt;embed height='323' align='middle' width='235' pluginspage='http://www.macromedia.com/go/getflashplayer' type='application/x-shockwave-flash' flashvars='data1=/uploads/files/xml&amp;data0=/uploads/files/index' name='movie' src='http://fom.ru/uploads/widget/widgetSlide.swf' wmode='transparent'&gt;&lt;/object&gt;">
+<chartData>
+	<index name="Medvedev" checked="true" link="http://fom.ru/indexes/indeks-doverija-prezidentu-rfd.-medvedevu.html" titleInx="ДОВЕРИЕ Д. МЕДВЕДЕВУУУУ"/>
+	<index name="RostZen" link="http://fom.ru/indexes/dinamika-cen.html" checked="false" titleInx="ДИНАМИКА ЦЕН"/>
+	<index name="Putin" link="http://fom.ru/indexes/indeks-doverija-glave-pravitelstva-rf-v.-putinu.html" checked="false" titleInx="ДОВЕРИЕ В. ПУТИНУ"/>
+	<index name="RostZen" link="http://fom.ru/indexes/dinamika-cen.html" checked="false" titleInx="ДИНАМИКА ЦЕН"/>
+	<index name="Protest" link="http://fom.ru/indexes/uroven-protestnyh-nastroenij.html" checked="false" titleInx="ПРОТЕСТНЫЕ НАСТРОЕНИЯ"/>
+	<index name="PrestijRus" link="http://fom.ru/indexes/prestizh-rossii.html" checked="false" titleInx="ПРЕСТИЖ РОССИИ"/>
+	<index name="RusEconomica" link="http://fom.ru/indexes/sostojanie-rossijskoj-ekonomiki.html" checked="false" titleInx="РОССИЙСКАЯ ЭКОНОМИКА"/>
+	<index name="Pravitelstvo_RF" link="http://fom.ru/indexes/indeks-doverija-pravitelstvu-rf.html" checked="false" titleInx="ДОВЕРИЕ ПРАВИТЕЛЬСТВУ РФ"/>
+	<index name="Gos_Duma" link="http://fom.ru/indexes/indeks-doverija-gosudarstvennoj-dume.html" checked="false" titleInx="ДОВЕРИЕ ГОС. ДУМЕ"/>
+	<index name="Edinaya_Rossia" link="http://fom.ru/indexes/indeks-doverija-partii-edinaja-rossija.html" checked="false" titleInx="ДОВЕРИЕ «ЕДИНОЙ РОССИИ»"/>
+	<index name="Spravedlivaya_Rossia" link="http://fom.ru/indexes/indeks-partii-spravedlivaja-rossija.html" checked="false" titleInx="ДОВЕРИЕ «СПРАВЕДЛИВОЙ РОССИИ»"/>
+	<index name="KPRF" link="http://fom.ru/indexes/indeks-doverija-partii-kprf.html" checked="false" titleInx="ДОВЕРИЕ КПРФ"/>
+	<index name="LDPR" link="http://fom.ru/indexes/indeks-doverija-partii-ldpr.html" checked="false" titleInx="ДОВЕРИЕ ЛДПР"/>
+</chartData>
+</alldata>
