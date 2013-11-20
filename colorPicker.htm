@@ -1,0 +1,21 @@
+﻿
+<script>
+//После соревнований его вполне можно использовать в мирных целях в несжатом виде. Не засоряет глобал,
+window.onload = function(){(function(H, D, s, h, r, g, b, v){
+	for(; r < H; r += D){
+		for(g = 256; g < H; g += D)
+			for(b = 256; b < H; b += D){
+				v = h(r) + h(g) + h(b);
+				s+='<b class=picker style="background-color:'+ v
+					+'" onmouseover=this.title="'+ v
+					+'" onclick=prompt("'+ v.replace(/(.)./g,'$1') +'","'+ v +'") ></b>';}
+		s+='<br>';
+	}
+	console.log(s)
+	document.body.innerHTML += s;
+})(512, 51, '', function(a){return a.toString(16).substr(1);}, 256)};
+</script>
+<style>
+	b.picker{display: inline-block; width: 8px; height: 8px; border-right: 1px solid #444; border-bottom: 1px solid
+	#444;}
+</style>
