@@ -1,0 +1,103 @@
+/* for file showFlags.htm */
+	body{background: url('fixFixedForIEfakeImg.gif') no-repeat;background-attachment: fixed;}
+
+	body, html{overflow:hidden; margin:0; padding:0;}
+	.flagList{
+		position: fixed;
+		top: 10px;
+		margin-left: 26%;
+		width: 70%;
+		height: 36px;
+		*height: 42px;
+		overflow-x: auto;
+		*overflow: auto;
+		border: 2px solid #59b;
+		padding: 2px 6px;
+		*padding: 0 6px;
+		background: #fff;
+		opacity: 0.78; filter:progid:DXImageTransform.Microsoft.Alpha(opacity=78);
+		*position: absolute; *top: expression(10+ document.getElementsByTagName('body')[0].scrollTop + "px");
+	}
+	.backLink{
+		display: none;
+		position: fixed;
+		float: right;
+		top: 10px;
+		height: 0;
+		margin-left: 26%;
+		width: 70%;
+		*width: 68%;
+		border-top: 2px solid transparent;
+		padding-top: 2px;
+		*padding-top: 0 6px;
+		opacity: 0.78; filter:progid:DXImageTransform.Microsoft.Alpha(opacity=78);
+		*position: absolute; *top: expression(10+ document.getElementsByTagName('body')[0].scrollTop + "px");
+	}
+		.backLink a.back{
+			display: block;
+			float: right;
+			padding: 0 6px;
+			background: #e4e4e4;
+			border: 1px dotted #939;
+			font-style: italic;
+			text-decoration: none;
+		}
+		.backLink a:hover.back{
+			text-decoration: underline;
+		}
+	.underWrite{
+		position: fixed;
+		bottom: 6px;
+		left: 66px;
+		padding: 0 5px 2px;
+		font-style: italic;
+		border: 1px solid #ace;
+		background: #eee;
+		opacity: 0.78; filter:progid:DXImageTransform.Microsoft.Alpha(opacity=78);
+			-moz-border-radius: 4px; border-radius: 6px;
+		*position: absolute; *bottom: expression(6+ document.getElementsByTagName('body')[0].scrollTop + "px");
+	}
+	div:hover.flagList{
+		height: 48%;
+		opacity: 1; filter: none;
+	}
+	.flagList .list{
+		clear: both;
+		width: 100%;
+		margin-bottom: 94%;
+	}
+	.flagList .item .nameShort{
+		float: left;
+		text-align: center;
+		min-width: 62px;
+		padding: 0 8px 2px;
+		font-size: 32px;
+		background: #e4e4e4;
+	}
+	.flagList .item a[name]{
+		display: block;
+		float: right;
+		width: 1px;
+		font-size: 36px;
+		height: 1.3em;
+	}
+	.flagList .item.xmp{display: none;}
+	.flagList .item .flag{
+		float: left;
+		width:16px;
+		height:9px;
+		margin: 18px 20px 0;
+		line-height: 1.3em;
+		*font-size: 1px;
+		background-image: url(fg.png);
+	}
+	.flagList .item .nameRu{padding-top: 2px;}
+	.flagList .item .nameRu a{color: #e44;}
+	.flagList .item .nameRu a:visited,
+	.flagList .item .nameEn a:visited{color: #803; font-weight: normal;}
+	.flagList .item .nameRu a,
+	.flagList .item .nameEn a{padding-left: 12px; font-weight: bold; text-decoration: none;}
+		.flagList .item .nameEn a{padding-left: 24px;}
+	.flagList .item .nameRu a:hover,
+	.flagList .item .nameEn a:hover{text-decoration: underline;}
+	.flagList .clr{width: 100%; height: 5px; clear: both; font-size: 1px;}
