@@ -5,10 +5,12 @@ spmbt
 
 *(в хронологии)*
 
-* [Палитра 216 цветов](http://jsfiddle.net/spmbt/6943a/) [в малом объёме](http://spmbt.github.io/spmbt/colorPickerMin.htm ) кода (JS,CSS, *ручная минификация*)
+* [Палитра 216 цветов](http://jsfiddle.net/spmbt/6943a/) [в малом объёме](http://spmbt.github.io/spmbt/colorPickerMin.htm ) кода (JS,CSS, *ручная минификация*), 2013-11
 
 * [API консоли Javascript](http://habrahabr.ru/post/198372/) *(утилиты)*, 2013-10,<br>
  код [http://jsfiddle.net/spmbt/Wgah8/](http://jsfiddle.net/spmbt/Wgah8/.md)
+
+* [кнопки в поиске Гугла](https://github.com/spmbt/googleSearchExtraButtons) c параметрами *(юзерскрипт)*, 2013-05
 
 * [4-числовая система нумерации версий](http://habrahabr.ru/post/175187/) *(регекспы)*, 2013-04,<br>
 код [http://jsfiddle.net/spmbt/dk346/3/](http://jsfiddle.net/spmbt/dk346/3/.md)
