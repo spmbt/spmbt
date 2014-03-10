@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>calendar-imho: виджет календаря</title>
+	<meta name="Content-Type" content="text/html; charset=utf-8"/>
+	<meta http-equiv="x-ua-compatible" content="IE=9">
+	<meta name="description" content="Запуск виджета календаря для тестового задания"/>
+	<meta name="keywords" content="календарь, пример, тест, layout, widget"/>
+	<script>
+		requirejs = {
+	     baseUrl: './',
+	     paths: {
+	         domReady: '../../domReady/domReady'
+	     },
+	     deps: ['require', 'simple', "dimple", "func", "domReady"],
+	     callback: function (require, simple, dimple, func, domReady) {
+	         s = simple;
+	         d = dimple;
+	         f = func;
+	         done();
+	     }
+	 };
+	</script>
+	<script type="text/javascript" src="require2111min.js"></script>
+</head>
+<body>
+    <h1>require.js: Config requirejs Test</h1>
+    <p>Tests requirejs being defined as an object with init and ready configuration.</p>
+    <p>Check console for messages.</p>
+</body>
+</html>
