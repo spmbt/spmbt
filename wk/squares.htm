@@ -238,7 +238,7 @@
 		},
 		selectSquare: function(ev){ //навигация по квадратам
 			var key = ev.keyCode || ev.which;
-			if(key >= 32 && key <=40){
+			if(key >= 32 && key <=40 || key < 2){
 				var squaresGroup = $qA('.squaresGroup', this.squaresEl)
 					,squaresRow = $qA('.squaresRow', squaresGroup[this.cursor.group -1])
 					,squares = $qA('.sq', squaresRow[this.cursor.row -1]);
@@ -258,7 +258,7 @@
 						this.cursor.pos = Math.min(squares.length, this.cursor.pos);
 					}
 				}else{ //выбор группы
-					if(key == 32) //by mouse
+					if(key == 32 || key ==0 || key ==1) //by mouse
 						this.cursor.group = ev.group || this.cursor.group;
 					if(key == 35) //end
 						this.cursor.group = squaresGroup.length;
