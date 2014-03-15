@@ -5,6 +5,9 @@ spmbt
 
 *(в хронологии)*
 
+* [Навигация по группам квадратов](http://spmbt.github.io/spmbt/wk/squares.htm) на <i>Bootstrap 3.1</i> - перемещение активного квадрата в 3-уровневом списке клавишами направлений и PgUp-PgDn, добавление новых списков, 2014-03
+* [Редактируемая телефонная книга](http://spmbt.github.io/spmbt/wk/angularList/listFiddle.htm) (Address Book App) на <i>Angular 1.2, Bootstrap 3.1</i> с подсписком "spam", переносом между списками, фильтром, юнит-тестами (без бекенда) (копия на [jsfiddle](http://jsfiddle.net/spmbt/hDPqV/)), 2014-03
+* [Пример Grunt-файла](http://spmbt.github.io/spmbt/wk/Gruntfile.js) в одном из проектов, Node.JS (470 строк, 8 модулей, 5 функций: сборка, досборка, Sass-компиляция на лету), 2013-11
 * [Палитра 216 цветов](http://jsfiddle.net/spmbt/6943a/) [в малом объёме](http://spmbt.github.io/spmbt/colorPickerMin.htm ) кода (JS,CSS, *ручная минификация*), 2013-11
 
 * [API консоли Javascript](http://habrahabr.ru/post/198372/) *(утилиты)*, 2013-10,<br>

@@ -1,0 +1,318 @@
+﻿<!DOCTYPE html>
+<html><head>
+	<meta charset="utf-8" />
+	<title>Squares navigation with Bootstrap3</title>
+	<meta http-equiv="x-ua-compatible" content="IE=9">
+	<link href="angularList/bootstrap311.min.css" rel="stylesheet">
+	<script type="text/javascript" src="core.js"></script>
+</head><body>
+<style>
+	body{
+		margin: 12px;
+	}
+	blockquote{margin-bottom: 4px;}
+	.bg-info{padding-left: 4px;}
+	.action{margin-left:6em;}
+
+	.b-squares{
+		max-width: 1100px;
+		margin-top: 2px;
+		padding: 12px 16px;
+		border: 1px dotted #ddd; border-radius: 6px;}
+		.b-squares .squaresGroup{
+			position: relative;
+			outline: 0;
+			margin: 0;
+			padding-top: 4px;
+			padding-bottom: 1px;
+			padding-left: 2.4em;
+			line-height: 1.3em;
+			text-indent: -2.2em;
+			border: 1px dotted transparent; border-radius: 3px;
+		}
+		.b-squares .squaresGroup:hover{background-color: #eee;}
+		.b-squares .squaresGroup.active{
+			border: 1px solid darkgreen;}
+		.b-squares .squaresGroup:not(.active){cursor: pointer;}
+	.b-squares-inner{background-color: #f5f5f5;}
+	.b-squares .sq{
+		display: inline-block;
+		width: 1em;
+		height: 1em;
+		margin: 0 0.14em;
+		text-indent: 1.5em;
+		background-color: darkorange;
+		border: 1px solid #c36c00;
+	}
+	.b-squares .sq:hover{background-color: #ffbC40;}
+	.b-squares .sq.active{
+		background-color: darkblue;
+		border: 1px solid blue;
+	}
+	.b-squares .btn-del{position: absolute;
+		display: none;
+		bottom: 3px; right: 3px;
+	}
+		.b-squares .squaresGroup:hover .btn-del{display: block;}
+		.b-squares .squaresGroup .btn-del:hover{background-color: #e9635F;}
+		.b-squares .squaresGroup:not(.active):hover .btn-del{display: block; background-color: #f2dede; color: #bbb; cursor: default;}
+		.b-squares .btn-del:hover{background-color: #d5a5a0;}
+
+</style>
+<div class="bg-info" style="cursor:pointer" onclick="sq.toggleTaskBlock()" title=свернуть/развернуть>
+	<div style=float:right;padding-right:4px><i>Created: 2014-03-14 by <a href=http://spmbt.github.io/spmbt/ onclick=event.stopPropagation() title="Список примеров">spmbt</a></i></div>
+	<strong>Задача</strong>: <u>Навигация по группам квадратов</u>.</div>
+<blockquote class=taskBlock><small>
+<p>Есть несколько групп квадратов, каждая из групп содержит i рядов квадратов (для каждой группы - своё значение i). В каждом ряду Ni квадратов (см. рис. 1. Пример группы квадратов. Синим выделен активный квадрат. Зелёная область – выделение первой группы квадратов).</p>
+<pre style=color:darkorange>
+<div style="border:1px solid darkgreen; padding-top: 6px;">	&#9600; &#9600; &#9600; &#9600; &#9600; &#9600; &#9600; &#9600; &#9600; &#9600; &#9600;
+	&#9600; &#9600; &#9600; <span style=color:blue>&#9600;</span>
+	&#9600; &#9600; &#9600; &#9600; &#9600; &#9600;</div>
+	&#9600; &#9600; &#9600; &#9600; &#9600;
+	&#9600; &#9600; &#9600; &#9600; &#9600; &#9600; &#9600; &#9600; &#9600; &#9600; &#9600; &#9600;
+	&#9600; &#9600; &#9600; &#9600; &#9600; &#9600;
+
+	&#9600; &#9600;
+	&#9600; &#9600; &#9600; &#9600; &#9600; &#9600; &#9600; &#9600; &#9600; &#9600;
+</pre><pre>
+		<span style=color:darkorange>&#9600;</span> - оранжевый квадрат;
+		<span style=color:blue>&#9600;</span> - синий квадрат;
+
+		рис. 1. Пример интерфейса.
+</pre>
+<p>Необходимо написать скрипт, осуществляющий навигацию по данной сетке для каждой группы квадратов<br>
+	посредством нажатия клавиш <strong>«вверх», «вниз», «вправо», «влево»</strong> на клавиатуре. </p>
+
+<p>Переключение между группами осуществляется <strong>кликом мышки</strong> на любую точку области соответствующей группы.</p>
+
+<p>Особенности скрипта:</p>
+
+<ul><li> скрипт должен корректно работать для любых чисел i и Ni;
+</li><li> в параметрах скрипта должна быть возможность менять кол-во рядов и кол-во квадратиков в ряду для каждой группы и создавать новые группы квадратов;
+</li><li> если под/над активным квадратиком существует ряд, но не существует квадрата, то переход должен осуществляться на последний квадратик соответствующего ряда.</li></ul>
+
+<footer>Some task generator</footer></small></blockquote>
+<div class="bg-info" style=margin-top:2px;>
+	Набор групп квадратов
+	<button onclick="sq.newList({clear: 1, nRowsMax: 7, nSquaresMax: 26, nSquaresMin: 4})" class="btn-xs btn-primary action">Новый случайный набор</button>
+	<button onclick="sq.addGroup({nSquaresMax: 46, nSquaresMin: 4})" class="btn-xs btn-primary action">+Добавить группу</button>
+	<button onclick="sq.addGroup({toEnd: 1, nSquaresMax: 88, nSquaresMin: 2})" class="btn-xs btn-primary action">+в конец</button>
+</div>
+<div class=b-squares>
+	<div class=b-squares-inner>
+		<div class="squaresGroup active" tabindex="1">
+			<div class="squaresRow">
+				<span class="sq active"></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span>
+			</div>
+			<div class="squaresRow">
+				<span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span>
+			</div>
+			<div class="squaresRow">
+				<span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span>
+			</div>
+			<button class="btn-del btn-xs btn-danger" onclick="sq.deleteGroup(this)">Delete</button>
+		</div>
+		<div class="squaresGroup" tabindex="2">
+			<div class="squaresRow">
+				<span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span>
+			</div>
+			<div class="squaresRow">
+				<span class=sq></span><span class=sq></span></span>
+			</div>
+			<div class="squaresRow">
+				<span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span>
+			</div>
+			<button class="btn-del btn-xs btn-danger" onclick="sq.deleteGroup(this)">Delete</button>
+		</div>
+		<div class="squaresGroup" tabindex="3">
+			<div class="squaresRow">
+				<span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span>
+			</div>
+			<div class="squaresRow">
+				<span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span><span class=sq></span>
+			</div>
+			<button class="btn-del btn-xs btn-danger" onclick="sq.deleteGroup(this)">Delete</button>
+		</div>
+	</div>
+</div>
+<script>
+	randomMinMax = function(min, max){
+		return (0|min) +(0| Math.random() * (Math.ceil(max + 1E-10) - (0|min) ));
+	}
+	Squares = function(sett){
+		var sett = sett ||{};
+		this.sett = $x({
+				nGroupsMin: 2
+				,nGroupsMax: 9
+				,nRowsMin: 1
+				,nRowsMax: 7
+				,nSquaresMin: 1
+				,nSquaresMax: 126
+				,tabIndex: 0
+			},sett);
+		delete this.sett.cursor;
+		this.squaresEl = $q('.b-squares-inner');
+		this.nGroups = $qA('.squaresGroup', this.squaresEl).length;
+		this.cursor = $x({
+			group: 1
+			,row: 1
+			,pos: 1
+		}, sett.cursor);
+
+		//статические команды
+		if(sett.cmd)
+			Squares.prototype[sett.cmd](sett);
+	}
+	Squares.prototype ={
+		toggleTaskBlock: function(){
+			var addItem = document.querySelector('.taskBlock');
+			addItem.style.display = addItem.style.display =='none' ?'block':'none';
+		},
+		newList: function(h){
+			h = h ||{};
+			var sqGroups = $qA('.squaresGroup', this.squaresEl);
+			if(h.clear){
+				for(var i in sqGroups)
+					$e({remove: sqGroups[i]});
+				this.nGroups =0;
+			}
+			this.cursor ={ //заглушка условий появления курсора на базе старых данных
+				group: 1
+				,row: 1
+				,pos: 1};
+			var nGroups = randomMinMax(h.nGroupsMin || this.sett.nGroupsMin, h.nGroupsMax || this.sett.nGroupsMax);
+			for(var i = 1; i <= nGroups; i++)
+				this.addGroup($x(h, {i: i + this.nGroups, nGroups: nGroups, toEnd: 1}) );
+			this.nGroups = $qA('.squaresGroup', this.squaresEl).length;
+		},
+		addGroup: function(h){
+			var squaresGroup = $e({
+				cl:'squaresGroup'+ (this.cursor.group == h.i ?' active':'')
+				,at: {tabindex: this.sett.tabIndex++}
+				,bef: !h.toEnd && $q('.squaresGroup.active', this.squaresEl)
+				,apT: h.toEnd && this.squaresEl
+			});
+			if(!h.toEnd)
+				this.cursor.group++;
+			var nRows = randomMinMax(h.nRowsMin || this.sett.nRowsMin, h.nRowsMax || this.sett.nRowsMax);
+			for(var j =0; j < nRows; j++){
+				var squaresRow = $e({
+					cl:'squaresRow'
+					,ht: this.addRow($x(h, {j: j, nRows: nRows}))
+					,apT: squaresGroup
+				});
+			}
+			var th = this;
+			$e({el:'button'
+				,cl:'btn-del btn-xs btn-danger'
+				,on:{click: function(ev){th.deleteGroup(ev, {sq: th}) }}
+				,ht:'Delete'
+				,apT: squaresGroup
+			});
+		},
+		addRow: function(h){
+			var nSqs = randomMinMax(h.nSquaresMin || this.sett.nSquaresMin, h.nSquaresMax || this.sett.nSquaresMax)
+				,s ='';
+			for(var k =0; k < nSqs; k++)
+				s +='<span class="sq'+ ( (this.cursor.group == h.i || h.i == h.nGroups && this.cursor.group > h.nGroups)
+						&& (this.cursor.row == h.j +1 || h.j == h.nRows -1 && this.cursor.row >= h.nRows)
+						&& (this.cursor.pos == k +1 || k == nSqs -1 && this.cursor.pos >= nSqs)
+					?' active':'') +'"></span>';
+			/*if(this.cursor.group > h.nGroups)
+				this.cursor.group = h.nGroups;
+			if(this.cursor.row >= h.nRows)
+				this.cursor.row = h.nRows -1;
+			if(this.cursor.pos >= nSqs)
+				this.cursor.pos = nSqs -1;*/
+			return s;
+		},
+		selectGroup: function(ev){ //выбор группы
+			var sqGroups = $qA('.squaresGroup', this.squaresEl)
+				,th = $parents(/squaresGroup/, ev.target2 || ev.target) || $qA('.squaresGroup', this.squaresEl)[0];
+			for(var i in sqGroups)
+				sqGroups[i].classList && sqGroups[i].classList.remove('active');
+			th.classList.add('active');
+			if(!ev.target2)
+				this.selectSquare($x(ev, {keyCode: 32, group: $index(/squaresGroup/, th) +1}));
+			this.cursor.group = $index(/squaresGroup/, th) +1;
+		},
+		selectSquare: function(ev){ //навигация по квадратам
+			var key = ev.keyCode || ev.which;
+			if(key >= 32 && key <=40){
+				var squaresGroup = $qA('.squaresGroup', this.squaresEl)
+					,squaresRow = $qA('.squaresRow', squaresGroup[this.cursor.group -1])
+					,squares = $qA('.sq', squaresRow[this.cursor.row -1]);
+				squares[this.cursor.pos -1].classList.remove('active');
+				$pdsp(ev);
+				if(key >= 37){ //выбор квадрата
+					if(key == 37) //left
+						this.cursor.pos = (squares.length + this.cursor.pos -2) % squares.length +1;
+					if(key == 39) //right
+						this.cursor.pos = (squares.length + this.cursor.pos) % squares.length +1;
+					if(key == 38) //up
+						this.cursor.row = (squaresRow.length + this.cursor.row -2) % squaresRow.length +1;
+					if(key == 40) //down
+						this.cursor.row = (squaresRow.length + this.cursor.row) % squaresRow.length +1;
+					if(key == 38 || key == 40){
+						squares = $qA('.sq', squaresRow[this.cursor.row -1]);
+						this.cursor.pos = Math.min(squares.length, this.cursor.pos);
+					}
+				}else{ //выбор группы
+					if(key == 32) //by mouse
+						this.cursor.group = ev.group || this.cursor.group;
+					if(key == 35) //end
+						this.cursor.group = squaresGroup.length;
+					if(key == 36) //home
+						this.cursor.group = 1;
+					if(key == 33) //PgUp
+						this.cursor.group = Math.max(1, this.cursor.group -1);
+					if(key == 34) //PgDn
+						this.cursor.group = Math.min(squaresGroup.length, this.cursor.group +1);
+					squaresRow = $qA('.squaresRow', squaresGroup[this.cursor.group -1]);
+					this.cursor.row = Math.min(squaresRow.length, this.cursor.row);
+					squares = $qA('.sq', squaresRow[this.cursor.row -1]);
+					this.cursor.pos = Math.min(squares.length, this.cursor.pos);
+
+					//select group
+					this.selectGroup($x(ev
+						,{target2: squaresGroup[Math.min(squaresGroup.length, Math.max(1, this.cursor.group)) -1]}) );
+				}
+				squares[this.cursor.pos -1].classList.add('active');
+			}
+		},
+		deleteGroup: function(ev, h){
+			var th = !ev.el && ev || h && (!h.el && h || h.el) || ev.target;
+			th = th.target || th;
+			if(ev.target)
+				$pdsp(ev);
+			if($parents(/ active/, th)){
+				var sqGroup = $parents(/squaresGroup/, th);
+				if(sqGroup && sqGroup.classList.contains('active')){
+					var sqGNext = $next(/squaresGroup/,sqGroup.nextSibling)
+						,sqGPrev = $prev(/squaresGroup/,sqGroup.previousSibling);
+					sqGNext && sqGNext.classList.add('active')
+						|| !sqGNext && sqGPrev && sqGPrev.classList.add('active');
+					$e({remove: sqGroup});
+					var sq = h.sq;
+					var squaresGroup = $qA('.squaresGroup', sq.squaresEl)
+						,squaresRow = $qA('.squaresRow', squaresGroup[sq.cursor.group -1]);
+					//sq.cursor.group--;
+					sq.cursor.row = Math.min(squaresRow.length, sq.cursor.row);
+					var squares = $qA('.sq', squaresRow[sq.cursor.row -1]);
+					sq.cursor.pos = Math.min(squares.length, sq.cursor.pos);
+					squares[sq.cursor.pos -1].classList.add('active');
+				}
+			}
+		}
+	}
+	window.sq = new Squares({nSquaresMax: 122});
+	sq.newList();
+	$e({el: sq.squaresEl
+		,on:{click: function(ev){ sq.selectGroup.apply(sq, [ev]) }
+			,keydown: function(ev){ sq.selectSquare.apply(sq, [ev]) }
+	}});
+	$e({el: window
+		,on:{keydown: function(ev){ sq.selectSquare.apply(sq, [ev]) }
+	}});
+
+</script>

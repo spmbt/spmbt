@@ -1,16 +1,16 @@
 ﻿var $q = function(q, el){return (el || document).querySelector(q)}  //=====общие функции=====
 ,$qA = function(q, el){return (el || document).querySelectorAll(q)}
 ,$x = function(el, h){	if(h) for(var i in h) el[i] = h[i]; return el}
-,$pd = function(ev){ev.preventDefault();}
-,$sp = function(ev){ev.stopPropagation();}
-,$e = function(h){ //el|clone,IF+ifA,q|[q,el],cl,ht,cs,at,on,apT,prT,bef,aft,f+fA
+,$pd = function(ev){ev.preventDefault();},$sp = function(ev){ev.stopPropagation();}
+,$pdsp = function(ev){ev.preventDefault(); ev.stopPropagation();}
+,$e = function(h){ //el|clone,remove,IF+ifA,q|[q,el],cl,ht,cs,at,on,apT,prT,bef,aft,f+fA
 	if(h.ht || h.at){
 		var at = h.at ||{}; if(h.ht) at.innerHTML = h.ht;}
 	if(typeof h.IF =='function')
 		h.IF = h.IF.apply(h, h.ifA ||[]);
 	h.el = h.el || h.clone || h.IF && h.IF.attributes && h.IF ||'DIV';
 	var o = h.el = h.clone && h.clone.cloneNode(!0)
-			|| (typeof h.el =='string' ? document.createElement(h.el) : h.el);
+			|| (typeof h.el =='string' ? document.createElement(h.el) : h.el) || h.remove;
 	var i
 		,toCsKey = function(s){
 			return s.replace(/([A-Z])/g,'-$1').toLowerCase();
@@ -36,6 +36,7 @@
 		h.aft && (h.aft.nextSibling
 			? h.aft.parentNode.insertBefore(o, h.aft.nextSibling)
 			: h.aft.parentNode.appendChild(o) );
+		h.remove && h.remove.parentNode && h.remove.parentNode.removeChild(h.remove);
 		if(typeof h.f =='function')
 			h.f.apply(h, h.fA ||[]); //this - это h
 	}
@@ -52,6 +53,10 @@ $prev = function(clss, elem){
 $next = function(clss, elem){
 	for(var el = elem; el!=null && !RegExp(clss).test(el.className); el = el.nextSibling);
 	return el;
+},
+$index = function(clss, elem){ var i =-1;
+	for(var el = elem; el!=null; el = el.previousSibling) if(RegExp(clss).test(el.className) ) i++;
+	return i;
 },
 $getPosition = function(o){
 	var x =0, y =0;
@@ -85,6 +90,13 @@ $ajax = function(h){
 				h.error(req, xhr);
 		}
 	}
+};
+var $css = addRules
+,$ready = function(f){
+	if(window.addEventListener)
+		addEventListener('DOMContentLoaded',f,!1);
+	else if(winow.attachEvent)
+		winow.attachEvent('onload',f);
 };
 String.prototype.trim = function(s){var s = this ||s;
 	return s.replace(/(^\s+|\s+$)/g,'')};
