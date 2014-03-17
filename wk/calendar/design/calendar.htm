@@ -6,6 +6,8 @@
 	<meta name="description" content="Запуск виджета календаря для тестового задания"/>
 	<meta name="keywords" content="календарь, пример, тест, layout, widget"/>
 	<link rel="stylesheet" href=calendar.css />
+	<script type="text/javascript" src=../../core.js></script>
+	<script type="text/javascript" src=../calendar.js></script>
 </head><body>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <div class=wrapper>
@@ -241,34 +243,35 @@
 	</div>
 </div>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<script type="text/javascript" src=../calendar.js></script>
+
 
 <script type="text/javascript">
-var tst = function(){
-	loadLogger(0, 0); //logOnScreen, logLevel - функции wcl (console.log) и подобные
+loadLogger(0, 0); //logOnScreen, logLevel - функции wcl (console.log) и подобные
+$ready(function(){
 	var o = $e({
 		el: $q('.b-calendar-imho .body')
 		,on:{mousemove: function(ev){
-			var cell ={el: parents(/^cell$/,ev.target)};
-			$x(cell, getPosition(cell.el)); //x,y
-			cell.w = cell.el.offsetWidth;
-			cell.h = cell.el.offsetHeight;
-			'mmove'.wcl(cell, ev);
-			var pup ={arrowHalf: 7};
-			pup.el = $e({el: $q('.b-calendar-popup-nooverflow')
+			var cell = {el: $parents(/^cell$/, ev.target)};
+			cell.el && $x($x(cell, $getPosition(cell.el))
+				,{w: cell.el.offsetWidth, h: cell.el.offsetHeight});
+			var pup = {arrowHalf: 7
+					,el: $q('.b-calendar-popup-nooverflow')
+				};
+			$x(pup,{
+				x: cell.x -cell.w / 5 + pup.arrowHalf
+				,y: cell.y +cell.h + pup.arrowHalf
+				,w: pup.el.offsetWidth
+				,h: pup.el.offsetHeight
+			});
+			$e({el: pup.el
 				,cs:{display:'block'
-						,left: cell.x -cell.w / 5 + pup.arrowHalf +'px'
-						,top: cell.y +cell.h +
-					pup.arrowHalf
-					+'px'} });
+					,left: pup.x +'px'
+					,top: pup.y +'px'}
+			});
+			'mmove'.wcl(cell, ev);
 		}}
 	});
-};
-	if(window.addEventListener){
-		this.addEventListener('DOMContentLoaded',tst,!1);
-	}else{
-		this.attachEvent('onload',tst);
-	}
+});
 </script>
 
 <!--Тестовое задание front­end.
