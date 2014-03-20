@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type='text/xsl' href='xslt.xsl'?>
+<params>
+	<param name="test5" value="5-z"/>
+	<param name="test1" value="1-ee"/>
+	<param name="test2" value="2-a"/>
+	<param name="test3" value="3-x2"/>
+	<param name="test4" value="4-x"/>
+</params>

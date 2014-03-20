@@ -1,0 +1,3 @@
+define([
+    'models/ContactModel'
+], function () {});

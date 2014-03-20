@@ -23,7 +23,7 @@ spmbt
 * [увеличение по наведению](http://jsfiddle.net/spmbt/ySjmY/1/) и просмотр в новом окне по клику, 2013-02: 
 * [JS-валидация](http://jsfiddle.net/spmbt/Z3Hy4/) по отправке формы.
 
-* [таблица логов](http://spmbt.github.io/spmbt/wk/37.20.115.43.xml) на XML+XSLT *(экзотические технологии)*, 2013-03
+* [таблица логов](http://spmbt.github.io/spmbt/wk/37.20.115.43.xml) на XML+XSLT *(экзотические технологии)*, [статья о пагинаторе](http://habrahabr.ru/post/174977/) 2013-03
 
 * [Инсайд-активность на Гитхабе](http://img221.imageshack.us/img221/800/githubactivity.png) в 2012 (скриншот)
 

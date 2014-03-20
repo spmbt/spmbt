@@ -102,9 +102,7 @@ $getPosition = function(o){
 },
 $loadJs = function(url, id, callback, obj){ //||(url, callback)
 	var d = obj || document;
-	if(typeof id =='function'){
-		callback = id;
-		id = null;}
+	if(typeof id =='function'){ callback = id; id = null;}
 	if(id && d.getElementById(id)) return; //no new script with same id
 	if(url.charAt(0) =='+')
 		url = SPRu +'/'+ url.substr(1); //relative path
