@@ -1,0 +1,59 @@
+﻿Изобразим 2 набора параметров форм в формате списков name=value:<br>
+<textarea name=ta1 cols=80 rows=10>
+a=123
+b=321
+c=34556
+c=3546
+</textarea><br>
+<br>
+<textarea name=ta2 cols=80 rows=10>
+a=123
+c=34556
+c=3546
+e=33468
+</textarea><br>
+<br>
+Система должна отвечать на вопрос: «Что изменилось в параметрах?»<br>
+<i>(Для правильных результатов не должны создаваться неформатные строки без знаков "=".)</i><br>
+<button onclick=f()>Сравнить</button><br>
+<b>Результат:</b><br>
+<div class=res></div>
+<script>
+var $q = function(q, f){return (f||document).querySelector(q)},
+f = function(){
+	var ta1 = ($q('textarea[name=ta1]').value +'\n').replace(/\n+$/,'\n'),
+		ta2 = ($q('textarea[name=ta2]').value +'\n').replace(/\n+$/,'\n'),
+		tOld = ta1.split('\n'),
+		tNew = ta2.split('\n'),
+		chgd ='<i style=color:#999>Изменено</i>:<br>',
+		added ='<i style=color:#999>Добавлено</i>:<br>',
+		remed ='<i style=color:#999>Удалено</i>:<br>',
+		a2,
+		j =0; //индекс 2-го списка
+	for(var i =0; i < tOld.length; i++){
+		if(tOld[i] != tNew[j]){
+			if(tOld[i].replace(/=.*/,'') == tNew[j].replace(/=.*/,''))
+				chgd +='&nbsp; '+ tNew[j] +'<br>';
+			else{
+				a2 ='&nbsp; '+ tNew[j] +'<br>';
+				for(var k = j +1; k < tNew.length; k++){
+					if(tOld[i] == tNew[k]){
+						added += a2;
+						a2 =''; //найдено совпадение после вставки
+						j = k -1;
+						i--;
+						break;
+					}else
+						a2 += '&nbsp; '+ tNew[k] +'<br>';
+				}
+				if(a2 !=''){
+					remed += '&nbsp; '+ tOld[i] +'<br>';
+					j--;
+				}
+			}
+		}
+		j++;		
+	};
+	$q('.res').innerHTML = chgd + added + remed;
+};
+</script>
