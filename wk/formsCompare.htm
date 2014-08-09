@@ -56,4 +56,49 @@ f = function(){
 	};
 	$q('.res').innerHTML = chgd + added + remed;
 };
+// Подробнее: http://company.yandex.ru/job/vacancies/dev_int_news.xml
+var aSort = [
+    {name: 'Вести.Ру', type: 'tv'},
+    {name: 'Итоги', type: 'smi'},
+    {name: 'Вести.ФМ', type: 'radio'},
+    {name: 'НТВ', type: 'tv'},
+    {name: 'Огонёк', type: 'smi'},
+    {name: 'Аргументы и факты', type: 'smi'},
+    {name: 'ТВ Культура', type: 'tv'},
+    {name: 'Коммерсант ФМ', type: 'radio'} ].sort(function(a,b){
+		return ''+a.type >''+b.type ? 1: ''+a.type <''+b.type ?-1 : 0}) ;
+var s ='', typePrev;
+for(var i in aSort){
+	s += (s==''?'': typePrev != aSort[i].type ?'|':',') + aSort[i].name;
+	typePrev = aSort[i].type;
+};
+console.log(s);
+// JS-функцию, которая будет принимать строку и возвращать отсортированные в алфавитном порядке символы этой строки
+sortSymbs = function(s){
+	var a = s.split('');
+	return a.sort(function(a,b){return a<b ?-1: a>b ?1: 0});
+};
+console.log(sortSymbs('123eeebcdae'));
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
