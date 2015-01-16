@@ -1,7 +1,7 @@
 spmbt
 =====
 
-#####spmbt pages
+##### [spmbt pages](http://spmbt.github.io/spmbt/) (in html)
 
 *(в хронологии)*
 
@@ -43,4 +43,4 @@ spmbt
 [zadanie3_4.htm](http://spmbt.github.io/spmbt/wk/zadanie3_4.htm)<br>
 [zadanie1-2.htm](http://spmbt.github.io/spmbt/wk/zadanie1-2.htm)
 
-* [http://userscripts.org/scripts/show/121690](http://userscripts.org/scripts/show/121690) и [http://userstyles.org/styles/36690](http://userstyles.org/styles/36690) - юзерскрипты и стили;
+* [https://greasyfork.org/en/users/2323-spmbt](https://greasyfork.org/en/users/2323-spmbt) - юзерскрипты, [http://userscripts-mirror.org/scripts/show/121690](http://userscripts-mirror.org/scripts/show/121690) - старый адрес (не обновляется; только для просмотра описаний), и [http://userstyles.org/styles/36690](http://userstyles.org/styles/36690) - и стили;
