@@ -1,10 +1,15 @@
 spmbt
 =====
 
-##### [spmbt pages](http://spmbt.github.io/spmbt/) (in html)
+##### [spmbt pages](http://spmbt.github.io/spmbt/) *(в html-формате)*
 
 *(в хронологии)*
 
+* [Формат данных jsonComm](https://github.com/spmbt/jsonComm) для поддержки комментариев в JSON; функции:<br>
+&nbsp;&nbsp;для перевода JSON с комментариями в обычный JSON (без потери структуры);<br>
+&nbsp;&nbsp;для оформления комментариев рядом с парами "ключ-значение" как валидных значений;<br>
+&nbsp;&nbsp;для изменения ключей и значений исходного jsonComm без затрагивания комментариев;<br>
+&nbsp;&nbsp; *[пример](http://spmbt.github.io/jsonComm/) с бенчмарком*, 2015-01
 * [Навигация по группам квадратов](http://spmbt.github.io/spmbt/wk/squares.htm) на <i>Bootstrap 3.1</i> - перемещение активного квадрата в 3-уровневом списке клавишами направлений и PgUp-PgDn, добавление новых списков, 2014-03
 * [Редактируемая телефонная книга](http://spmbt.github.io/spmbt/wk/angularList/listFiddle.htm) (Address Book App) на <i>Angular 1.2, Bootstrap 3.1</i> с подсписком "spam", переносом между списками, фильтром, юнит-тестами (без бекенда) (копия на [jsfiddle](http://jsfiddle.net/spmbt/hDPqV/)), 2014-03
 * [Пример Grunt-файла](http://spmbt.github.io/spmbt/wk/Gruntfile.js) в одном из проектов, Node.JS (470 строк, 8 модулей, 5 функций: сборка, досборка, Sass-компиляция на лету), 2013-11
