@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html><head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script>
+	window.addEventListener('load', function(){
+		var renode = function(el){ //создание элементов на словах документа. При обновлениях текстов требуется повторять эту функцию.
+			el.innerHTML = el.innerHTML.replace(/(?:((?:<[^>]+>\s*)*)|(\s))(?!<[^>]+>)(\S+?\s*)(?=<|\s)/g,
+				'$1<span class="anyword">$2$3</span>');
+			//словом считается любой текст, обрамлённый пробельными символами (пробел, таб, перенос строки, вертикальный таб)
+		};
+		renode(document.body);
+
+		document.body.addEventListener('click', function(ev){
+			var t = ev.target;
+			t.className =='anyword' && t.parentNode && t.parentNode.removeChild(t);
+		},!1);
+	},!1);
+	</script>
+	<style>
+		div{margin-left: 24px}
+		.anyword:hover{background:#ffb}
+	</style>
+</head>
+<body>
+<u>Задача на JS: сделайте страницу с любым текстом. При клике на любое слово это слово должно исчезать.</u>
+<div>Test 2 > 1 fvmiejgiegmer mmm rtm trm prtm rtm ptm prm mrtpom prtm prtm prtm rt rt бзкеь rtm lnrtl текщт ortn 4 345345 ... 000000 //////////$;999.</div>
+Проверка кириллицы и не-букв:<br/>
+<div>Test RU <b>теги</b>_<i>кпит</i><b>ет</b><s style=background:#aee>_:::_</s> щепщуее кетпкет ректркте рткерктеншр тке ркшртет ortnh rho кет ртке ррррррркер <b style="color:darkred">ornrt hnrthn rt hreh fvmiejgiegmer mmm rtm trm prtm rtm ptm prm mrtpom prtm prtm prtm rt rt бзкеь rtm lnrtl текщт ortn 4 345345 ... 000000 //////////$;999</b>.</div>
+<br/>
+(словом считается любой текст, обрамлённый тегами или пробельными символами - пробел, таб, перенос строки, вертикальный таб)<br/>
+Пробелы в тегах не учитываются, но при этом в тегах не должно встречаться знаков ">" (не обработано ради простоты регекспов).
+
+</body>
+<html>

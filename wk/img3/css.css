@@ -1,0 +1,211 @@
+﻿/* CSS Reset v1.0 | 20080212 http://meyerweb.com/eric/tools/css/reset/index.html */
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, big, em, font, img, q, s, small, strong, sub, sup, tt, b, u, i, center, dl, dt, dd, ol, ul, li, form, label, table, tbody, tfoot, thead, tr, th, td{
+	margin: 0; padding: 0; border: 0; outline: 0; font-size: 100%; vertical-align: top;/*changed*/ background: transparent;}
+applet, abbr, acronym, address, cite, code, del, dfn, ins, kbd, samp, strike, var, fieldset, legend, caption{
+	margin: 0; padding: 0; border: 0; outline: 0; font-size: 100%; vertical-align: top;/*changed*/ background: transparent;}
+body, .wrap{line-height: 1.2; font-family: Verdana, Arial, Helvetica, Tahoma, sans-serif; color: #000; font-size: 13px;}/*changed*/
+ol, ul{list-style: none;}
+blockquote, q{quotes: none;}
+blockquote:before, blockquote:after, q:before, q:after{content: ''; content: none;}
+:focus{outline: 0;}/* remember to define focus styles! */
+ins{text-decoration: none;}del{text-decoration: line-through;}/* remember to highlight inserts somehow!*/
+table{border-collapse: collapse; border-spacing: 0;}/* tables still need'cellspacing="0"' in the markup*/
+
+/* common */
+	body >.wrap{margin: 0 8px;}
+	a{color: #cc3885;}
+	a:hover{color: #e25590;}
+	h2{font: bold 19px Arial, Helvetica, Tahoma, sans-serif;}
+/* /end common */
+		
+.page-frame{
+	max-width: 945px;
+	margin: 12px auto;
+	font-size: 15px;
+	box-shadow: 0 2px 5px 2px #999;
+	color: #333;
+}
+.head-uslu{
+	min-height: 91px;
+	padding: 13px 20px 5px;
+	text-align: center;
+	font: 34px Arial, Helvetica, Tahoma, sans-serif;
+	font-weight: bold;
+	text-shadow: 2px 2px 1px #556;
+	background-image: url('background.jpg');
+	background-size: 100%;
+	background-repeat: no-repeat;
+	background-color: #3b495d;
+	color: #fff;
+}
+.tech-descr-text{
+	text-shadow: 2px 2px 2px #b66a4d;
+	font-style: italic;
+	color: #fff4ce;
+}
+.probnaya-uslu{
+	padding: 9px 3px 11px;
+	text-align: center;
+	font: 16px Arial, Helvetica, Tahoma, sans-serif;
+	background: #f8f5ed;
+	color: #333;
+}
+.what-is{
+	width: 15%;
+	padding: 6px 2px;
+	border: 1px solid #d09b5d;
+	text-align: center;
+	font-size: 24px;
+	font-weight: bold;
+	text-shadow: 2px 2px 2px #b66a4d;
+	background: #f8ce6c;
+	color: #fff4ce;
+}
+.tech-descr-over{
+	background-color: #fff4ce;
+}
+.tech-descr{
+	float: right;
+	width: 76%;
+	margin: 2px 4px 0;
+	text-align: right;
+	font-style: italic;
+	color: #9d7628;
+}
+.why-uslu{
+	padding: 0 40px 40px;
+}
+.what-is:after,
+.why-uslu:after,
+.why-uslu dl:after,
+.how-are-we-work:after{
+	content:' ';
+	display: block;
+	width:100%;
+	height: 0;
+	clear: both;
+}
+.why-uslu h2,
+.how-are-we-work h2{
+	padding: 20px 10px 10px;
+	text-align: center;
+}
+.why-uslu dt{
+	float: left;
+	width: 31%;
+	padding: 16px 20px 16px 0;
+	border-top: 1px solid #eee;
+	font-family: Arial, Helvetica, Tahoma, sans-serif;
+	font-weight: bold;
+}
+.why-uslu dd{
+	float: left;
+	width: 65%;
+	padding: 16px 0;
+	border-top: 1px solid #eee;
+}
+.thesis-block{
+	float: left;
+	width: 50%;
+}
+.thesis{
+	float: left;
+	width: 50%;
+}
+.sqr{
+	position: relative;
+	height: 100px;
+	background: 40% 0 no-repeat;
+}
+.thesis .sqr .arrow{
+	position: absolute;
+	width: 40px;
+	height: 40px;
+	top: 22%;
+	left: 83%;
+	background-image: url('in-description-arrow.png');
+}
+.thes1{background-image: url('in-description-checkbox.png');}
+.thes2{background-image: url('in-description-compass.png');}
+.thes3{background-image: url('in-description-mail.png');}
+.thes4{background-image: url('in-description-like.png');}
+.thesis .txt{
+	padding: 0 8px;
+	font-size: 14px;
+}
+.how-are-we-work{
+	margin: 0 40px;
+	padding: 3px 0 37px;
+	border-top: 1px solid #eee;
+}
+
+@media (max-width: 700px){
+	body >.wrap{margin: 0 4px;}
+	.head-uslu{
+		background-size: 692px;
+		background-position: 100% 0;
+	}
+	.thesis-block{
+		width: 67%;
+	}
+	.thesis-block.next{
+		float: right;
+		margin-top: 20px;
+	}
+	.thesis-block .thesis:last-child .arrow{
+		top: 46%;
+		left: 78%;
+		-ms-transform: rotate(90deg);
+		-moz-transform: rotate(90deg);
+		-webkit-transform: rotate(90deg);
+		transform: rotate(90deg);
+	}
+	.how-are-we-work{
+		margin: 0 20px;
+	}
+}
+@media (max-width: 620px){
+	.why-uslu{
+		padding: 0 20px 18px;
+	}
+}
+@media (max-width: 570px){
+	.why-uslu{
+		padding: 0 20px 18px;
+	}
+	.why-uslu dt {
+		float: none;
+		width: 80%;
+		clear: both;
+		border-top: 0;
+	}
+	.why-uslu dd{
+		float: right;
+		width: 90%;
+		margin-left: 10%;
+		padding: 0;
+		border-top: 0;
+	}
+}
+@media (max-width: 512px){
+	.thesis-block{
+		width: 100%;
+	}
+	.thesis{
+		float: none;
+		width: 100%;
+		margin-top: 15px;
+	}
+	.sqr{
+		background-position: 46% 0;
+	}
+	.thesis-block .thesis .sqr .arrow{
+		top: 22%;
+		left: 83%;
+		-ms-transform: rotate(90deg);
+		-moz-transform: rotate(90deg);
+		-webkit-transform: rotate(90deg);
+		transform: rotate(90deg);
+	}
+
+}
