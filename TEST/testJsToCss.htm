@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html><head>
+	<title>Test of writing of CSS rules using JS </title>
+<script>
+	var $x = function(el, h){if(h) for(var i in h) el[i] = h[i]; return el;} //===extend===
+		,d = document
+		,$q = function(q, f){ return (f||d).querySelector(q);}
+		,$qA = function(q, f){ return (f||d).querySelectorAll(q);}
+	,$e = function(g){ //===create or use existing element=== //g={el|clone,cl,ht,cs,at,atRemove,on,apT}
+		g.el = g.el || g.clone ||'DIV';
+		var o = g.o = g.clone && g.clone.cloneNode && g.clone.cloneNode(!0)
+				|| (typeof g.el =='string' ? /\W/.test(g.el) ? $q(g.el, g.blck) : d.createElement(g.el) : g.el);
+		if(o){ //execute if exist
+			if(g.cl)
+				o.className = g.cl;
+			if(g.clAdd)
+				o.classList.add(g.clAdd);
+			if(g.cs)
+				$x(o.style, g.cs);
+			if(g.ht || g.at){
+				var at = g.at ||{}; if(g.ht) at.innerHTML = g.ht;}
+			if(g.edHt){
+				o.innerHTML = o.innerHTML.replace(/#eef/g, g.edHt);
+				alert(o.innerHTML)
+			}
+			if(at)
+				for(var i in at){
+					if(i=='innerHTML') o[i] = at[i];
+					else o.setAttribute(i, at[i]);}
+			if(g.atRemove)
+				for(var i in g.atRemove)
+					o.removeAttribute(g.atRemove[i]);
+			if(g.on)
+				for(var i in g.on) if(g.on[i])
+					o.addEventListener(i, g.on[i],!1);
+			g.ap && o.appendChild(g.ap);
+			g.apT && g.apT.appendChild(o);
+		}
+		return o;
+	};
+
+	var addRules = function(css){ //работает везде
+		var heads = d.getElementsByTagName('head')
+			,node = d.createElement('style');
+		node.type ='text/css';
+		heads.length && heads[0].appendChild(node);
+		node.appendChild(d.createTextNode(css));
+	};
+	var addRulesE = function(css){ //работает: новые и Opera 12
+		return $e({
+			el:'style'
+			//,at:{type:'text/css'} //работает и без этого
+			,ap: d.createTextNode(css)
+			,apT: $q('head')
+		});
+	};
+	var edRules = function(rule, css){ //работает:
+		return $e({
+			el: rule ||'style'
+			,ap: d.createTextNode(css) //ht: css - было бы обновление всего элемента
+			,edHt: css
+			,apT: $q('head')
+		});
+	};
+
+	onload = function(){
+		addRules('.red{background: #fee; color: #b77;}');
+		var rule0   = addRulesE('.blue{background: #eef; color: #77b;}');
+		$e({
+			el:'.newRules'
+			,on:{click: function(){addRulesE('.new{color: #333;}')}} //добавление новых стилей ожидаемо работает
+		});
+		//далее пробуем редактировать группу правил по edRules
+		var rule = addRulesE('.green{background: #efe; color: #7b7;}');
+		$e({
+			el:'.edRules0'
+			,on:{click: function(){edRules(rule,'.green .new{color: #383;}')}} //дописывание существующих стилей - работает
+			//т.е. можно на лету править стили по селекторам, вносить новые стили скриптами
+		});
+		$e({
+			el:'.edRules'
+			,on:{click: function(){edRules(rule0,'#dee');}} //редактирование существующих стилей - работает
+		});
+		// остаётся дописать красивую форму редактирования - изменение, дописывание, удаление спецификаторов сначала по регекспам,
+		//   потом - по дублирующей модели типа Sass.  Саму Sass можно выписывать тоже на лету.
+	}
+
+
+</script>
+</head>
+<body>
+ <h1 class="red">Test of writing of CSS rules using JS - createElement</h1>
+ <h1 class="blue">Test of writing <span class="new">of CSS rules using JS</span> - $e({})</h1>
+<button class="newRules">New Rules</button>
+ <h1 class="green">Test of writing <span class="new">of CSS rules using JS</span> - $e({})</h1>
+ <button class="edRules">Edit Rules Group</button>
+
+</body>
+</html>
